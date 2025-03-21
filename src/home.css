@@ -150,7 +150,7 @@ html {
 }
 
 .info-box:hover {
-  box-shadow: 0 15px 35px rgba(31, 38, 135, 0.5);
+  box-shadow: 0 15px 35px rgba(31, 38, 135, 0.203);
 }
 
 /* CTA Box */
