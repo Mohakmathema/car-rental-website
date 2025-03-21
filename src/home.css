@@ -142,6 +142,15 @@ html {
   /* font-family: arial; */
   letter-spacing: 1.5px;
   font-family: "Montserrat", sans-serif;
+  cursor: default;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+.info-box:hover {
+  box-shadow: 0 15px 35px rgba(31, 38, 135, 0.5);
 }
 
 /* CTA Box */
