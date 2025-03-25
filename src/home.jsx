@@ -1,14 +1,20 @@
 import React, { useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import profileImage from "./assets/profile.svg";
 import BlurText from "C:/Users/ACER/Desktop/react/test2/react-bits-elements/BlurText/BlurText"; // Import the BlurText component
 
 function Home({ lastFrame }) {
   const infoBoxRef = useRef(null);
+  const navigate = useNavigate();
 
   // Log when animation completes
   const handleAnimationComplete = () => {
     console.log("Tagline animation completed!");
+  };
+
+  const handleProfileClick = () => {
+    navigate("/login");
   };
 
   return (
@@ -17,7 +23,7 @@ function Home({ lastFrame }) {
         {lastFrame && (
           <div className="squircle-frame">
             <img src={lastFrame} alt="Luxury car" className="squircle-image" />
-            <div className="profile-circle">
+            <div className="profile-circle" onClick={handleProfileClick}>
               <div className="profile-image"></div>
             </div>
           </div>
@@ -27,16 +33,16 @@ function Home({ lastFrame }) {
           <nav>
             <ul>
               <li>
-                <a href="#home">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="#fleet">Our Fleet</a>
+                <Link to="/fleet">Our Fleet</Link>
               </li>
               <li>
-                <a href="#services">Services</a>
+                <Link to="/services">Services</Link>
               </li>
               <li>
-                <a href="#contact">Contact</a>
+                <Link to="/contact">Contact</Link>
               </li>
             </ul>
           </nav>
