@@ -216,3 +216,172 @@ html {
   background-position: center;
   background-size: 1.6em;
 }
+
+/* Tablet View */
+@media screen and (max-width: 1024px) {
+  .content-wrapper {
+    width: 95%;
+    height: 95%;
+  }
+
+  .squircle-frame {
+    height: 550px;
+    border-radius: 60px;
+  }
+
+  .nav-box {
+    right: 40px;
+    width: 180px;
+  }
+
+  .nav-box a {
+    font-size: 2em;
+  }
+
+  .tagline-box {
+    left: 120px;
+  }
+
+  .info-box {
+    left: 40px;
+    width: 220px;
+  }
+
+  .cta-box {
+    right: 40px;
+  }
+}
+
+/* Mobile View */
+@media screen and (max-width: 768px) {
+  body,
+  html {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .home-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+
+  .squircle-frame {
+    width: 90%;
+    height: 400px;
+    border-radius: 40px;
+    margin-top: 60px;
+  }
+
+  .nav-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 0;
+    padding: 10px 20px;
+    z-index: 100;
+  }
+
+  .nav-box ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .nav-box li {
+    margin: 5px 0;
+  }
+
+  .nav-box a {
+    font-size: 1.2em;
+  }
+
+  .tagline-box {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 90%;
+    text-align: center;
+    margin: 20px auto;
+  }
+
+  .tagline-box div {
+    font-size: 2em !important;
+  }
+
+  .info-box {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 90%;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  .cta-box {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin: 20px auto;
+  }
+
+  .profile-circle {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    z-index: 101;
+  }
+
+  .profile-image {
+    background-size: 1.2em;
+  }
+}
+
+/* Small Mobile View */
+@media screen and (max-width: 480px) {
+  .squircle-frame {
+    height: 300px;
+    border-radius: 30px;
+  }
+
+  .nav-box {
+    padding: 5px 10px;
+  }
+
+  .nav-box ul {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-box a {
+    font-size: 1em;
+  }
+
+  .tagline-box div {
+    font-size: 1.6em !important;
+  }
+
+  .tagline-box div:last-child {
+    font-size: 0.9em !important;
+  }
+
+  .info-box {
+    font-size: 0.9em;
+  }
+
+  .book-btn {
+    padding: 10px 25px;
+    font-size: 0.8em;
+  }
+}
