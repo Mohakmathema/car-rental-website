@@ -8,6 +8,10 @@ const LoginSignup = ({ setUser }) => {
     email: "",
     password: "",
     confirmPassword: "",
+    fullName: "",
+    contactNumber: "",
+    address: "",
+    carPreferences: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,21 +52,26 @@ const LoginSignup = ({ setUser }) => {
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
+          fullName: formData.fullName,
+          contactNumber: formData.contactNumber,
+          address: formData.address,
+          carPreferences: formData.carPreferences,
         }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || "An error occurred");
+      if (response.ok) {
+        // Store user info in localStorage
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        setUser(data); // Set the user state in App.jsx
+        alert("Successful!"); // Show a success message
+        navigate("/"); // Redirect to the home page
+      } else {
+        setError(data.message || "An error occurred");
       }
-      // Store user info in localStorage
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setUser(data); // Set the user state in App.jsx
-      alert("Successful!"); // Show a success message
-      navigate("/"); // Redirect to the home page
     } catch (error) {
-      setError(error.message);
+      setError(error.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -106,14 +115,44 @@ const LoginSignup = ({ setUser }) => {
             required
           />
           {activeTab === "signup" && (
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              required
-            />
+            <>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Full Name"
+                value={formData.fullName}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="contactNumber"
+                placeholder="Contact Number"
+                value={formData.contactNumber}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                value={formData.address}
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="carPreferences"
+                placeholder="Car Preferences"
+                value={formData.carPreferences}
+                onChange={handleInputChange}
+              />
+            </>
           )}
           <button type="submit" className="submit-btn" disabled={loading}>
             {loading

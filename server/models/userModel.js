@@ -12,6 +12,22 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    fullName: {
+      type: String,
+      default: "",
+    },
+    contactNumber: {
+      type: String,
+      default: "",
+    },
+    address: {
+      type: String,
+      default: "",
+    },
+    carPreferences: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

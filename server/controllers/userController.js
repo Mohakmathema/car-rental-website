@@ -13,7 +13,7 @@ const generateToken = (id) => {
 // @access  Public
 const registerUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, fullName, contactNumber, address, carPreferences } = req.body;
 
     // Check if user exists
     const userExists = await User.findOne({ email });
@@ -26,12 +26,20 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       email,
       password,
+      fullName,
+      contactNumber,
+      address,
+      carPreferences,
     });
 
     if (user) {
       res.status(201).json({
         _id: user._id,
         email: user.email,
+        fullName: user.fullName,
+        contactNumber: user.contactNumber,
+        address: user.address,
+        carPreferences: user.carPreferences,
         token: generateToken(user._id),
       });
     } else {
@@ -58,6 +66,10 @@ const loginUser = async (req, res) => {
       res.json({
         _id: user._id,
         email: user.email,
+        fullName: user.fullName,
+        contactNumber: user.contactNumber,
+        address: user.address,
+        carPreferences: user.carPreferences,
         token: generateToken(user._id),
       });
     } else {
@@ -80,6 +92,10 @@ const getUserProfile = async (req, res) => {
       res.json({
         _id: user._id,
         email: user.email,
+        fullName: user.fullName,
+        contactNumber: user.contactNumber,
+        address: user.address,
+        carPreferences: user.carPreferences,
       });
     } else {
       res.status(404).json({ message: 'User not found' });
