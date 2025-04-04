@@ -217,6 +217,16 @@ html {
   background-size: 1.6em;
 }
 
+.logged-in-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #4caf50; /* Green color */
+  border-radius: 50%;
+}
+
 /* Tablet View */
 @media screen and (max-width: 1024px) {
   .content-wrapper {

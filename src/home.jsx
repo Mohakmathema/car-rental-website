@@ -1,20 +1,25 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import profileImage from "./assets/profile.svg";
 import BlurText from "C:/Users/ACER/Desktop/react/test2/react-bits-elements/BlurText/BlurText"; // Import the BlurText component
 
-function Home({ lastFrame }) {
+function Home({ lastFrame, user }) {
   const infoBoxRef = useRef(null);
   const navigate = useNavigate();
 
-  // Log when animation completes
   const handleAnimationComplete = () => {
     console.log("Tagline animation completed!");
   };
 
   const handleProfileClick = () => {
-    navigate("/login");
+    if (user) {
+      // Navigate to the profile page if the user is logged in
+      navigate("/profile");
+    } else {
+      // Navigate to login/signup if the user is not logged in
+      navigate("/login");
+    }
   };
 
   return (
@@ -24,7 +29,9 @@ function Home({ lastFrame }) {
           <div className="squircle-frame">
             <img src={lastFrame} alt="Luxury car" className="squircle-image" />
             <div className="profile-circle" onClick={handleProfileClick}>
-              <div className="profile-image"></div>
+              <div className="profile-image">
+                {/* Conditionally render something if the user is logged in, e.g., a border */}
+              </div>
             </div>
           </div>
         )}
@@ -49,7 +56,6 @@ function Home({ lastFrame }) {
         </div>
         {/* Tagline Box with BlurText */}
         <div className="tagline-box">
-          {/* Replace the h1 with BlurText */}
           <div
             style={{
               fontSize: "3em",
@@ -67,8 +73,7 @@ function Home({ lastFrame }) {
               className="tagline-blur"
             />
           </div>
-
-          {/* Replace the p with BlurText */}
+          {/*do this replace the p tag thingy with BlurText */}
           <div
             style={{
               paddingTop: "5px",

@@ -7,11 +7,19 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+        "server": "node server/server.js",
+  "dev-server": "nodemon server/server.js"
   },
   "dependencies": {
     "@react-spring/web": "^9.7.5",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
     "framer-motion": "^11.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0"

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./loginSignup.css";
 
-const LoginSignup = () => {
+const LoginSignup = ({ setUser }) => {
   const [activeTab, setActiveTab] = useState("login");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,10 +21,51 @@ const LoginSignup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    setError("");
+
+    // For signup, validate that passwords match
+    if (
+      activeTab === "signup" &&
+      formData.password !== formData.confirmPassword
+    ) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const endpoint =
+        activeTab === "login" ? "/api/users/login" : "/api/users";
+
+      const response = await fetch(`http://localhost:5000${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "An error occurred");
+      }
+      // Store user info in localStorage
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setUser(data); // Set the user state in App.jsx
+      alert("Successful!"); // Show a success message
+      navigate("/"); // Redirect to the home page
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,6 +85,9 @@ const LoginSignup = () => {
             Sign Up
           </button>
         </div>
+
+        {error && <div className="error-message">{error}</div>}
+
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
             type="email"
@@ -68,8 +115,12 @@ const LoginSignup = () => {
               required
             />
           )}
-          <button type="submit" className="submit-btn">
-            {activeTab === "login" ? "Login" : "Sign Up"}
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading
+              ? "Processing..."
+              : activeTab === "login"
+              ? "Login"
+              : "Sign Up"}
           </button>
         </form>
         <div style={{ textAlign: "center", marginTop: "20px" }}>
