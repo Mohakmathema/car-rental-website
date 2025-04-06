@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
-import Fleet from "./fleet";
+import Fleet from "./Fleet"
 import Profile from "./profile"; // Import the Profile component
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [lastFrame, setLastFrame] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); 
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
@@ -48,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+ export default App;

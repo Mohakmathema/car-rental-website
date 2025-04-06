@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import profileImage from "./assets/profile.svg";
-import BlurText from "C:/Users/ACER/Desktop/react/test2/react-bits-elements/BlurText/BlurText"; // Import the BlurText component
+import BlurText from "C:/Users/Hp/Desktop/car-rental-website/react-bits-elements/BlurText/BlurText"; // Import the BlurText component
 
 function Home({ lastFrame, user }) {
   const infoBoxRef = useRef(null);
@@ -109,4 +109,4 @@ function Home({ lastFrame, user }) {
   );
 }
 
-export default Home;
+ export default Home;
