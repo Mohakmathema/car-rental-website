@@ -4,7 +4,8 @@ import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
-import Profile from "./profile"; // Import the Profile component
+import Profile from "./profile";
+import ContactUs from "./ContactUs";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -35,7 +36,7 @@ function App() {
             <Route path="/login" element={<LoginSignup setUser={setUser} />} />
             <Route path="/fleet" element={<Fleet />} />
             <Route path="/services" element={<div>Services Page</div>} />
-            <Route path="/contact" element={<div>Contact Page</div>} />
+            <Route path="/contact" element={<ContactUs />} />
             <Route
               path="/profile"
               element={<Profile user={user} setUser={setUser} />}
