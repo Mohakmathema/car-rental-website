@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./fleet.css";
-import { getCars, filterCars } from "./data.js";
 
 const Fleet = () => {
   const [cars, setCars] = useState([]);
@@ -10,17 +9,62 @@ const Fleet = () => {
   const [sortOrder, setSortOrder] = useState("most-least");
   const [showOnlyAvailable, setShowOnlyAvailable] = useState(false);
   const [noResults, setNoResults] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Fetch cars from API
   useEffect(() => {
-    // Load cars from the service
-    const carData = getCars();
-    setCars(carData);
-    setFilteredCars(carData);
+    const fetchCars = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/items');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch cars');
+        }
+        
+        const data = await response.json();
+        // Assuming the API returns an array of car objects
+        setCars(data);
+        setFilteredCars(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
   }, []);
 
+  // Filter cars based on search term, sort order, and availability
   useEffect(() => {
-    // Apply filtering whenever search, sort or availability criteria change
-    const results = filterCars(cars, searchTerm, sortOrder, showOnlyAvailable);
+    if (cars.length === 0) return;
+    
+    let results = [...cars];
+    
+    // Filter by search term
+    if (searchTerm) {
+      results = results.filter(car => 
+        car.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        car.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    // Filter by availability
+    if (showOnlyAvailable) {
+      results = results.filter(car => car.available);
+    }
+    
+    // Sort by price
+    results.sort((a, b) => {
+      if (sortOrder === "most-least") {
+        return b.price - a.price;
+      } else {
+        return a.price - b.price;
+      }
+    });
+    
     setFilteredCars(results);
     setNoResults(results.length === 0 && searchTerm !== "");
   }, [cars, searchTerm, sortOrder, showOnlyAvailable]);
@@ -48,6 +92,9 @@ const Fleet = () => {
   const navigateToHome = () => {
     window.location.href = "/"; // Redirect to home page
   };
+
+  if (loading) return <div className="loading">Loading cars...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="fleet-container">
@@ -86,14 +133,18 @@ const Fleet = () => {
         <div className="fleet-grid">
           {filteredCars.map((car) => (
             <div
-              key={car.id}
-              className={`car-card ${car.brand.toLowerCase()}-card ${hoveredCar === car.id ? 'hovered' : ''} ${!car.available ? 'unavailable' : ''}`}
-              onMouseEnter={() => handleMouseEnter(car.id)}
+              key={car._id} // Using MongoDB _id
+              className={`car-card ${car.brand ? car.brand.toLowerCase() : ''}-card ${hoveredCar === car._id ? 'hovered' : ''} ${!car.available ? 'unavailable' : ''}`}
+              onMouseEnter={() => handleMouseEnter(car._id)}
               onMouseLeave={handleMouseLeave}
             >
-              <img src={car.image} alt={car.brand} className="car-image" />
-              <p className="car-name">{car.brand}</p>
+              <img src={car.image || '/placeholder-car.jpg'} alt={car.name} className="car-image" />
+              <p className="car-name">{car.name}</p>
               <div className="car-description">{car.description}</div>
+              <div className="car-price">${car.price}</div>
+              <div className="car-status">
+                {car.available ? 'Available' : 'Unavailable'}
+              </div>
             </div>
           ))}
         </div>
@@ -102,4 +153,4 @@ const Fleet = () => {
   );
 };
 
- export default Fleet;
+export default Fleet;
