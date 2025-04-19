@@ -1,156 +1,169 @@
-import React, { useState, useEffect } from "react";
-import "./fleet.css";
+// File: app.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const path = require('path');
 
-const Fleet = () => {
-  const [cars, setCars] = useState([]);
-  const [filteredCars, setFilteredCars] = useState([]);
-  const [hoveredCar, setHoveredCar] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortOrder, setSortOrder] = useState("most-least");
-  const [showOnlyAvailable, setShowOnlyAvailable] = useState(false);
-  const [noResults, setNoResults] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Initialize Express
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-  // Fetch cars from API
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/items');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch cars');
-        }
-        
-        const data = await response.json();
-        // Assuming the API returns an array of car objects
-        setCars(data);
-        setFilteredCars(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-    fetchCars();
-  }, []);
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/carfleet', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
 
-  // Filter cars based on search term, sort order, and availability
-  useEffect(() => {
-    if (cars.length === 0) return;
-    
-    let results = [...cars];
-    
-    // Filter by search term
-    if (searchTerm) {
-      results = results.filter(car => 
-        car.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        car.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    
-    // Filter by availability
-    if (showOnlyAvailable) {
-      results = results.filter(car => car.available);
-    }
-    
-    // Sort by price
-    results.sort((a, b) => {
-      if (sortOrder === "most-least") {
-        return b.price - a.price;
-      } else {
-        return a.price - b.price;
-      }
+// Car Schema
+const CarSchema = new mongoose.Schema({
+  name: String,
+  brand: String,
+  description: String,
+  price: Number,
+  available: { type: Boolean, default: true },
+  image: String,
+  createdDate: { type: Date, default: Date.now }
+});
+
+// User Schema
+const UserSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  password: String,
+  role: { type: String, default: 'user' },
+  createdAt: { type: Date, default: Date.now }
+});
+
+// Create models
+const Car = mongoose.model('Car', CarSchema);
+const User = mongoose.model('User', UserSchema);
+
+// Basic car routes
+app.get('/api/items', async (req, res) => {
+  try {
+    const cars = await Car.find();
+    res.json(cars);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get('/api/items/:id', async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    if (!car) return res.status(404).json({ message: 'Car not found' });
+    res.json(car);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.post('/api/items', async (req, res) => {
+  const newCar = new Car({
+    name: req.body.name,
+    brand: req.body.brand,
+    description: req.body.description,
+    price: req.body.price,
+    available: req.body.available !== undefined ? req.body.available : true,
+    image: req.body.image
+  });
+
+  try {
+    const savedCar = await newCar.save();
+    res.status(201).json(savedCar);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Basic user routes
+app.post('/api/users/register', async (req, res) => {
+  try {
+    const newUser = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password, // In a real app, hash this password
+      role: req.body.role || 'user'
     });
     
-    setFilteredCars(results);
-    setNoResults(results.length === 0 && searchTerm !== "");
-  }, [cars, searchTerm, sortOrder, showOnlyAvailable]);
+    const savedUser = await newUser.save();
+    res.status(201).json({
+      id: savedUser._id,
+      username: savedUser.username,
+      email: savedUser.email
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-  const handleMouseEnter = (id) => {
-    setHoveredCar(id);
-  };
+app.post('/api/users/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    // Simple password check (would use bcrypt in production)
+    const user = await User.findOne({ email, password });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    
+    res.json({
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-  const handleMouseLeave = () => {
-    setHoveredCar(null);
-  };
+// Sample data
+const seedDatabase = async () => {
+  const carCount = await Car.countDocuments();
+  if (carCount === 0) {
+    const sampleCars = [
+      {
+        name: "Model S",
+        brand: "Tesla",
+        description: "Electric sedan with long range and high performance",
+        price: 79990,
+        available: true,
+        image: "/images/tesla-model-s.jpg"
+      },
+      {
+        name: "F-150",
+        brand: "Ford",
+        description: "America's best-selling pickup truck",
+        price: 45000,
+        available: true,
+        image: "/images/ford-f150.jpg"
+      }
+    ];
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
-  };
-
-  const toggleAvailability = () => {
-    setShowOnlyAvailable(!showOnlyAvailable);
-  };
-
-  const navigateToHome = () => {
-    window.location.href = "/"; // Redirect to home page
-  };
-
-  if (loading) return <div className="loading">Loading cars...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-
-  return (
-    <div className="fleet-container">
-      <header>
-        <div className="header-left">
-          <button className="back-button" onClick={navigateToHome}>
-            &larr; Home
-          </button>
-          <input
-            type="text"
-            placeholder="Search by brand or description"
-            className="search-bar"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </div>
-        <div className="filters">
-          <select value={sortOrder} onChange={handleSortChange}>
-            <option value="most-least">most-least expensive</option>
-            <option value="least-most">least-most expensive</option>
-          </select>
-          <button 
-            className={`availability-btn ${showOnlyAvailable ? 'active' : ''}`}
-            onClick={toggleAvailability}
-          >
-            Available <span className={`status-indicator ${showOnlyAvailable ? 'active' : ''}`}></span>
-          </button>
-        </div>
-      </header>
-      
-      <h2>Pick your Brand</h2>
-      
-      {noResults ? (
-        <div className="no-results">No cars found matching "{searchTerm}"</div>
-      ) : (
-        <div className="fleet-grid">
-          {filteredCars.map((car) => (
-            <div
-              key={car._id} // Using MongoDB _id
-              className={`car-card ${car.brand ? car.brand.toLowerCase() : ''}-card ${hoveredCar === car._id ? 'hovered' : ''} ${!car.available ? 'unavailable' : ''}`}
-              onMouseEnter={() => handleMouseEnter(car._id)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <img src={car.image || '/placeholder-car.jpg'} alt={car.name} className="car-image" />
-              <p className="car-name">{car.name}</p>
-              <div className="car-description">{car.description}</div>
-              <div className="car-price">${car.price}</div>
-              <div className="car-status">
-                {car.available ? 'Available' : 'Unavailable'}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+    try {
+      await Car.insertMany(sampleCars);
+      console.log("Sample cars added to database");
+    } catch (err) {
+      console.error("Error seeding cars:", err);
+    }
+  }
 };
 
-export default Fleet;
+// Home route
+app.get('/', (req, res) => {
+  res.send('Car Fleet API is running');
+});
+
+// Start server
+app.listen(PORT, async () => {
+  console.log(`Server running on port ${PORT}`);
+  await seedDatabase();
+});
