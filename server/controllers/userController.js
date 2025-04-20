@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create user
+    //creating user here
     const user = await User.create({
       email,
       password,
@@ -58,10 +58,10 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check for user email
+    //checking for user email
     const user = await User.findOne({ email });
 
-    // Check if user exists and password matches
+    //checking if the user exists and password matches
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
@@ -107,3 +107,37 @@ const getUserProfile = async (req, res) => {
 };
 
 export { registerUser, loginUser, getUserProfile };
+
+// Update User
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Update failed', error });
+  }
+};
+
+// Delete User
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Delete failed', error });
+  }
+};

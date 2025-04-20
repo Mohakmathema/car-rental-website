@@ -4,22 +4,22 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 
-// Load env vars
+//loading the env variable
 dotenv.config();
 
-// Connect to database
+//connecting to the database with function
 connectDB();
 
 const app = express();
 
-// Middleware
+//callning the middleware user
 app.use(cors());
 app.use(express.json());
 
-// Routes
+//calling the routes server
 app.use('/api/users', userRoutes);
 
-// Basic route
+//getting the basic route with API
 app.get('/', (req, res) => {
   res.send('API is running...');
 });

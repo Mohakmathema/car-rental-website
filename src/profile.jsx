@@ -36,6 +36,31 @@ const Profile = ({ user, setUser }) => {
     navigate("/login");
   };
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account? This cannot be undone."
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/users/${user._id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        localStorage.removeItem("userInfo");
+        alert("Account deleted.");
+        setUser(null);
+        navigate("/login");
+      } else {
+        alert("Failed to delete account.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Deletion error");
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevData) => ({
@@ -91,10 +116,10 @@ const Profile = ({ user, setUser }) => {
             />
           </label>
           <label>
-            Car Prefrences:
+            Car Preferences:
             <input
               type="text"
-              name="carPrefrences"
+              name="carPreferences"
               value={profileData.carPreferences}
               onChange={handleChange}
             />
@@ -120,11 +145,19 @@ const Profile = ({ user, setUser }) => {
               <strong>Address:</strong> {profileData.address}
             </p>
             <p>
-              <strong>Car Prefrences:</strong> {profileData.carPreferences}
+              <strong>Car Preferences:</strong> {profileData.carPreferences}
             </p>
           </div>
           <button onClick={handleEditClick} className="edit-profile-button">
             Edit Profile
+          </button>
+          {/* Added Delete Profile Button */}
+          <button
+            onClick={handleDelete}
+            className="delete-profile-button"
+            style={{ marginLeft: "10px", color: "red" }}
+          >
+            Delete Profile
           </button>
         </>
       )}
@@ -136,3 +169,4 @@ const Profile = ({ user, setUser }) => {
 };
 
 export default Profile;
+//user management system

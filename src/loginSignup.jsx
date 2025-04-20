@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./loginSignup.css";
 
+//login ra signup handle garne part ho do not touch bigrinxa 🥹
 const LoginSignup = ({ setUser }) => {
   const [activeTab, setActiveTab] = useState("login");
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const LoginSignup = ({ setUser }) => {
     e.preventDefault();
     setError("");
 
-    // For signup, validate that passwords match
+    //this is signup and check if password matches
     if (
       activeTab === "signup" &&
       formData.password !== formData.confirmPassword
@@ -62,11 +63,11 @@ const LoginSignup = ({ setUser }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store user info in localStorage
+        //storing user info in localStorage
         localStorage.setItem("userInfo", JSON.stringify(data));
-        setUser(data); // Set the user state in App.jsx
-        alert("Successful!"); // Show a success message
-        navigate("/"); // Redirect to the home page
+        setUser(data); //setting the user state in App.jsx
+        alert("Successful!"); //showing a success message
+        navigate("/"); //go to homr page
       } else {
         setError(data.message || "An error occurred");
       }
@@ -76,6 +77,11 @@ const LoginSignup = ({ setUser }) => {
       setLoading(false);
     }
   };
+
+  // Navigate to admin login page
+  // const handleAdminClick = () => {
+  //   navigate("/adminLogin");
+  // };
 
   return (
     <div className="login-signup-container">
@@ -105,6 +111,7 @@ const LoginSignup = ({ setUser }) => {
             value={formData.email}
             onChange={handleInputChange}
             required
+            autoComplete="off"
           />
           <input
             type="password"
@@ -113,6 +120,7 @@ const LoginSignup = ({ setUser }) => {
             value={formData.password}
             onChange={handleInputChange}
             required
+            autoComplete="new-password"
           />
           {activeTab === "signup" && (
             <>
@@ -123,6 +131,7 @@ const LoginSignup = ({ setUser }) => {
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 required
+                autoComplete="new-password"
               />
               <input
                 type="text"
@@ -162,6 +171,14 @@ const LoginSignup = ({ setUser }) => {
               : "Sign Up"}
           </button>
         </form>
+
+        {/* Admin button
+        <div className="admin-link-container">
+          <button onClick={handleAdminClick} className="admin-btn">
+            Admin Login
+          </button>
+        </div> */}
+
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <Link
             to="/"

@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import profileImage from "./assets/profile.svg";
-import BlurText from "C:/Users/ACER/Desktop/react/test2/react-bits-elements/BlurText/BlurText"; // Import the BlurText component
-
+import BlurText from "C:/Users/ACER/Desktop/react/test2/react-bits-elements/BlurText/BlurText"; //Importing the BlurText component
+//*NOTE: blur text extrnal library ho download gara hai */
 function Home({ lastFrame, user }) {
   const infoBoxRef = useRef(null);
   const navigate = useNavigate();
@@ -14,10 +14,10 @@ function Home({ lastFrame, user }) {
 
   const handleProfileClick = () => {
     if (user) {
-      // Navigate to the profile page if the user is logged in
+      //go to user profile login bhaxa bhane
       navigate("/profile");
     } else {
-      // Navigate to login/signup if the user is not logged in
+      //go to login/signup if login bhaeko xaina
       navigate("/login");
     }
   };
@@ -35,7 +35,7 @@ function Home({ lastFrame, user }) {
             </div>
           </div>
         )}
-        {/* Navigation Box */}
+        {/* Nav bar right ma hune tyo box thingy*/}
         <div className="nav-box">
           <nav>
             <ul>

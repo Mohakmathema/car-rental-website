@@ -23,11 +23,11 @@ const Loader = ({ onComplete, setLastFrame }) => {
       canvas.height = video.videoHeight;
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Convert the canvas image to a data URL and pass it to Home component
+      //Converting the image to a data URL and pass it to Home component
       const lastFrame = canvas.toDataURL("image/png");
       setLastFrame(lastFrame);
 
-      // Start transition
+      //Starting change the transition
       setTransitioning(true);
 
       // Allow some time for the transition animation

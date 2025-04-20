@@ -6,6 +6,7 @@ import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
+// import AdminLogin from "./AdminLogin";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ function App() {
               element={<Profile user={user} setUser={setUser} />}
             />{" "}
             {/* Add the profile route */}
+            {/* <Route path="/adminLogin" element={<AdminLogin />}></Route> */}
           </Routes>
         )}
       </div>
