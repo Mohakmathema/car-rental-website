@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import profileImage from "./assets/profile.svg";
-import BlurText from "C:/Users/ACER/Desktop/react/test2/react-bits-elements/BlurText/BlurText"; //Importing the BlurText component
+import BlurText from "../react-bits-elements/BlurText/BlurText"; //Importing the BlurText component
 //*NOTE: blur text extrnal library ho download gara hai */
 function Home({ lastFrame, user }) {
   const infoBoxRef = useRef(null);
