@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
+import driverRoutes from './routes/driverRoutes.js';
+
 
 //loading the env variable
 dotenv.config();
@@ -18,6 +20,8 @@ app.use(express.json());
 
 //calling the routes server
 app.use('/api/users', userRoutes);
+
+app.use('/api/drivers', driverRoutes);
 
 //getting the basic route with API
 app.get('/', (req, res) => {

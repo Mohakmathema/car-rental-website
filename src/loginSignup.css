@@ -160,3 +160,12 @@
   background: rgba(255, 255, 255, 0.1);
   color: white;
 }
+
+.driver-link {
+  display: flexbox;
+  align-items: center;
+}
+
+.driver-link > p {
+  text-align: center;
+}

@@ -193,6 +193,28 @@ const LoginSignup = ({ setUser }) => {
           >
             Back to Home
           </Link>
+          <div
+            className="driver-link"
+            style={{
+              marginTop: "20px",
+              textAlign: "center",
+              color: "#fff",
+            }}
+          >
+            <p>
+              Are you a driver?{" "}
+              <Link
+                to="/driver"
+                style={{
+                  color: "#4a90e2",
+                  textDecoration: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                Click here
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

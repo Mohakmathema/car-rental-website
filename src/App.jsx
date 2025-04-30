@@ -7,6 +7,8 @@ import Fleet from "./fleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
 // import AdminLogin from "./AdminLogin";
+import DriverOwner from "./driverOwner";
+import DriverDashboard from "./DriverDashboard"; // Add this import
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -44,6 +46,8 @@ function App() {
             />{" "}
             {/* Add the profile route */}
             {/* <Route path="/adminLogin" element={<AdminLogin />}></Route> */}
+            <Route path="/driver" element={<DriverOwner />} />
+            <Route path="/driver-dashboard" element={<DriverDashboard />} />
           </Routes>
         )}
       </div>
