@@ -1,0 +1,238 @@
+.fleet-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 250px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filters select, .availability-btn {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.availability-btn {
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+.availability-btn.active {
+  background-color: #f0f8ff;
+  border-color: #1a75ff;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.status-indicator.active {
+  background-color: #1a75ff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.car-card {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.car-image {
+  max-width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.car-name {
+  margin-top: 10px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.car-description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+/* General hover effects for all cars */
+.car-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.car-card:hover .car-image {
+  transform: scale(1.1);
+}
+
+.car-card:hover .car-description {
+  transform: translateY(0);
+}
+
+/* Animation classes */
+.animated-gradient {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.2) 50%, 
+    rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+}
+
+/* Brand-specific styles */
+.bugatti-card:hover {
+  border-color: #1a75ff;
+  animation: bugatti-glow 2s infinite;
+}
+
+.bugatti-card:hover .car-name {
+  color: #1a75ff;
+}
+
+.bugatti-card .car-description {
+  background-color: rgba(26, 117, 255, 0.8);
+}
+
+.bmw-card:hover {
+  border-color: #0066b3;
+  animation: bugatti-glow 1.5s infinite;
+}
+
+.bmw-card:hover .car-name {
+  color: #0066b3;
+}
+
+.bmw-card .car-description {
+  background-color: rgba(0, 102, 179, 0.8);
+}
+
+.kia-card:hover {
+  border-color: #bb162b;
+  animation: bugatti-glow 2s infinite;
+}
+
+.kia-card:hover .car-name {
+  color: #bb162b;
+}
+
+.kia-card .car-description {
+  background-color: rgba(187, 22, 43, 0.8);
+}
+
+.tesla-card:hover {
+  border-color: #e82127;
+  animation: bugatti-glow 1.5s infinite;
+}
+
+.tesla-card:hover .car-name {
+  color: #e82127;
+}
+
+.tesla-card .car-description {
+  background-color: rgba(232, 33, 39, 0.8);
+}
+
+.hyundai-card:hover {
+  border-color: #002c5f;
+  animation: bugatti-glow 2s infinite;
+}
+
+.hyundai-card:hover .car-name {
+  color: #002c5f;
+}
+
+.hyundai-card .car-description {
+  background-color: rgba(0, 44, 95, 0.8);
+}
+
+.landcruiser-card:hover {
+  border-color: #2e8b57;
+  animation: bugatti-glow 2s infinite;
+}
+
+.landcruiser-card:hover .car-name {
+  color: #2e8b57;
+}
+
+.landcruiser-card .car-description {
+  background-color: rgba(46, 139, 87, 0.8);
+}
+
+/* Animations */
+@keyframes bugatti-glow {
+  0% { box-shadow: 0 0 10px rgba(26, 117, 255, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(26, 117, 255, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(26, 117, 255, 0.5); }
+}
+
+/* New classes for search functionality */
+.no-results {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+}
+
+.unavailable-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.car-card.unavailable {
+  opacity: 0.7;
+}
