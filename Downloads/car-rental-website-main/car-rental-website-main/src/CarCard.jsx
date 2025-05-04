@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import CarCard from './CarCard';
+    
 
 const CarsPage = ({ cars }) => {
   return (
