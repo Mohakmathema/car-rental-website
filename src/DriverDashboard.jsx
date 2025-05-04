@@ -18,6 +18,14 @@ const DriverDashboard = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [vehicleId, setVehicleId] = useState(null);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setVehicleInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   useEffect(() => {
     const storedDriverInfo = localStorage.getItem("driverInfo");
     if (!storedDriverInfo) {
@@ -98,7 +106,6 @@ const DriverDashboard = () => {
     }
   };
 
-  // In the same file, update the handleSubmit function:
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -130,6 +137,7 @@ const DriverDashboard = () => {
 
       if (response.ok) {
         setIsVerified(true);
+        setVehicleId(data._id);
         alert("Vehicle information submitted successfully!");
       } else {
         setError(data.message || "Failed to submit vehicle information");
@@ -162,6 +170,10 @@ const DriverDashboard = () => {
 
   const handleUpdate = async () => {
     try {
+      if (vehicleInfo.images.some((img) => !img)) {
+        setError("Please ensure all image slots are filled");
+        return;
+      }
       setLoading(true);
       const response = await fetch(
         `http://localhost:5000/api/vehicles/${vehicleId}`,
@@ -171,7 +183,13 @@ const DriverDashboard = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${driverInfo.token}`,
           },
-          body: JSON.stringify(vehicleInfo),
+          body: JSON.stringify({
+            brand: vehicleInfo.brand,
+            model: vehicleInfo.model,
+            licensePlate: vehicleInfo.licensePlate,
+            description: vehicleInfo.description,
+            images: vehicleInfo.images,
+          }),
         }
       );
 
@@ -226,61 +244,6 @@ const DriverDashboard = () => {
     }
   };
 
-  if (isVerified) {
-    return (
-      <div className="driver-dashboard-container">
-        <h1>Driver Dashboard</h1>
-        <div className="verified-dashboard">
-          <div className="welcome-section">
-            <h2>Welcome, {driverInfo?.name}</h2>
-            <span className="verification-status">Verified Driver</span>
-          </div>
-
-          <div className="vehicle-info-section">
-            <h3>Your Vehicle Information</h3>
-            <div className="info-grid">
-              <div className="info-item">
-                <label>Brand</label>
-                <p>{vehicleInfo.brand}</p>
-              </div>
-              <div className="info-item">
-                <label>Model</label>
-                <p>{vehicleInfo.model}</p>
-              </div>
-              <div className="info-item">
-                <label>License Plate</label>
-                <p>{vehicleInfo.licensePlate}</p>
-              </div>
-            </div>
-
-            <div className="vehicle-images">
-              <h4>Vehicle Images</h4>
-              <div className="image-grid">
-                {vehicleInfo.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Vehicle view ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Add more dashboard features here */}
-        </div>
-      </div>
-    );
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setVehicleInfo((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   return (
     <div className="driver-dashboard-container">
       {isVerified ? (
@@ -294,36 +257,150 @@ const DriverDashboard = () => {
 
             <div className="vehicle-info-section">
               <h3>Your Vehicle Information</h3>
-              <div className="info-grid">
-                <div className="info-item">
-                  <label>Brand</label>
-                  <p>{vehicleInfo.brand}</p>
-                </div>
-                <div className="info-item">
-                  <label>Model</label>
-                  <p>{vehicleInfo.model}</p>
-                </div>
-                <div className="info-item">
-                  <label>License Plate</label>
-                  <p>{vehicleInfo.licensePlate}</p>
-                </div>
-                <div className="info-item">
-                  <label>Description</label>
-                  <p>{vehicleInfo.description}</p>
-                </div>
-              </div>
-              <div className="vehicle-images">
-                <h4>Vehicle Images</h4>
-                <div className="image-grid">
-                  {vehicleInfo.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`Vehicle view ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
+              {isEditing ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleUpdate();
+                  }}
+                >
+                  <div className="info-grid">
+                    <div className="form-group">
+                      <label>Brand:</label>
+                      <input
+                        type="text"
+                        name="brand"
+                        value={vehicleInfo.brand}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Model:</label>
+                      <input
+                        type="text"
+                        name="model"
+                        value={vehicleInfo.model}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>License Plate:</label>
+                      <input
+                        type="text"
+                        name="licensePlate"
+                        value={vehicleInfo.licensePlate}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Description:</label>
+                      <textarea
+                        name="description"
+                        value={vehicleInfo.description}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Add image upload section to edit form */}
+                  <div className="image-upload-section">
+                    <label>Vehicle Images</label>
+                    <div className="image-grid">
+                      {vehicleInfo.images.map((image, index) => (
+                        <div key={index} className="image-upload-item">
+                          <label className="image-upload-label">
+                            {image ? (
+                              <img
+                                src={image}
+                                alt={`Vehicle view ${index + 1}`}
+                              />
+                            ) : (
+                              <div className="upload-placeholder">
+                                <span>Upload Image {index + 1}</span>
+                              </div>
+                            )}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageUpload(index, e)}
+                              style={{ display: "none" }}
+                            />
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="button-group">
+                    <button
+                      type="submit"
+                      className="submit-btn"
+                      disabled={loading}
+                    >
+                      {loading ? "Updating..." : "Update Vehicle"}
+                    </button>
+                    <button
+                      type="button"
+                      className="cancel-btn"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <>
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <label>Brand</label>
+                      <p>{vehicleInfo.brand}</p>
+                    </div>
+                    <div className="info-item">
+                      <label>Model</label>
+                      <p>{vehicleInfo.model}</p>
+                    </div>
+                    <div className="info-item">
+                      <label>License Plate</label>
+                      <p>{vehicleInfo.licensePlate}</p>
+                    </div>
+                    <div className="info-item">
+                      <label>Description</label>
+                      <p>{vehicleInfo.description}</p>
+                    </div>
+                  </div>
+                  <div className="vehicle-images">
+                    <h4>Vehicle Images</h4>
+                    <div className="image-grid">
+                      {vehicleInfo.images.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`Vehicle view ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="button-group">
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="edit-btn"
+                    >
+                      Edit Vehicle Information
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="delete-btn"
+                      disabled={loading}
+                    >
+                      {loading ? "Deleting..." : "Delete Vehicle"}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </>
@@ -335,59 +412,51 @@ const DriverDashboard = () => {
             {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={handleSubmit} className="vehicle-form">
-              <div className="form-group">
-                <label htmlFor="brand">Vehicle Brand</label>
-                <input
-                  type="text"
-                  id="brand"
-                  name="brand"
-                  value={vehicleInfo.brand}
-                  onChange={handleInputChange}
-                  placeholder="Enter vehicle brand"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="model">Vehicle Model</label>
-                <input
-                  type="text"
-                  id="model"
-                  name="model"
-                  value={vehicleInfo.model}
-                  onChange={handleInputChange}
-                  placeholder="Enter vehicle model"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="licensePlate">License Plate Number</label>
-                <input
-                  type="text"
-                  id="licensePlate"
-                  name="licensePlate"
-                  value={vehicleInfo.licensePlate}
-                  onChange={handleInputChange}
-                  placeholder="Enter license plate number"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Vehicle Description</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={vehicleInfo.description}
-                  onChange={handleInputChange}
-                  placeholder="Enter vehicle description"
-                  required
-                />
+              <div className="info-grid">
+                <div className="form-group">
+                  <label>Brand:</label>
+                  <input
+                    type="text"
+                    name="brand"
+                    value={vehicleInfo.brand}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Model:</label>
+                  <input
+                    type="text"
+                    name="model"
+                    value={vehicleInfo.model}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>License Plate:</label>
+                  <input
+                    type="text"
+                    name="licensePlate"
+                    value={vehicleInfo.licensePlate}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Description:</label>
+                  <textarea
+                    name="description"
+                    value={vehicleInfo.description}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
               </div>
 
               <div className="image-upload-section">
                 <label>Vehicle Images (4 required)</label>
-                <div className="image-upload-grid">
+                <div className="image-grid">
                   {vehicleInfo.images.map((image, index) => (
                     <div key={index} className="image-upload-item">
                       <label className="image-upload-label">
