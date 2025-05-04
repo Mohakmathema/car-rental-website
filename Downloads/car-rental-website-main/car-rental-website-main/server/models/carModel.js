@@ -1,11 +1,26 @@
-// server/routes/carRoutes.js
+// server/models/carModel.js
 
-import express from 'express';
-import { getAllCars } from '../controllers/carController.js';
+import mongoose from 'mongoose';
 
-const router = express.Router();
+const carSchema = new mongoose.Schema({
+  brand: {
+    type: String,
+    required: true
+  },
+  model: {
+    type: String,
+    required: true
+  },
+  pricePerDay: {
+    type: Number,
+    required: true
+  },
+  imageUrl: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true });
 
-// Fetch all cars
-router.get('/cars', getAllCars);
+const Car = mongoose.model('Car', carSchema);
 
-export default router;
+export default Car;

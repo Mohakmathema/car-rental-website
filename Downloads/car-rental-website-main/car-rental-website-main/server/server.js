@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import driverRoutes from './routes/driverRoutes.js';
+import carRoutes from './routes/carRoutes.js';
 
 // ES Module workaround for __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +32,7 @@ app.use(express.json());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/drivers', driverRoutes);
+app.use('/api/cars', carRoutes);
 
 // Root route
 app.get('/', (req, res) => {
