@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // 🧠 Import useParams
+import { useParams } from 'react-router-dom';
 import './fleet.css';
 
 const Fleet = () => {
-  const { brand } = useParams(); // 🔥 Get brand from route (e.g., "bmw")
+  const { brand } = useParams();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -68,9 +68,17 @@ const Fleet = () => {
               {!car.available && <div className="unavailable-badge">Unavailable</div>}
               <img src={car.image} alt={car.brand} className="car-image" />
               <h3 className="car-name">{car.brand}</h3>
+              <p className="car-model">{car.model}</p>
+              <p className="car-number">Car No: {car.number}</p>
               <p>Price per day: ₹{car.price}</p>
+              <button 
+                className={`availability-btn ${car.available ? 'available' : 'unavailable'}`}
+                disabled
+              >
+                {car.available ? 'Available' : 'Unavailable'}
+              </button>
               <div className="car-description">
-                {car.available ? 'Luxury Cars' : 'Currently Unavailable'}
+                {car.available ? `${car.brand} ${car.model} - Ready to Rent` : 'Currently Unavailable'}
               </div>
             </div>
           ))

@@ -1,0 +1,55 @@
+.booking-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: #fff;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .no-bookings {
+    text-align: center;
+    font-size: 1.2em;
+    color: #bbb;
+    padding: 20px;
+  }
+  
+  .back-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2196f3;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: "Arial", sans-serif;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .back-button:hover {
+    background-color: #286090;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Media Query for responsiveness */
+  @media (max-width: 768px) {
+    .booking-container {
+      padding: 15px;
+    }
+  
+    .no-bookings {
+      font-size: 1em;
+    }
+  
+    .back-button {
+      font-size: 1em;
+      padding: 10px 20px;
+    }
+  }

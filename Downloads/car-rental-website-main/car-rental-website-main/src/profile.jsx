@@ -17,7 +17,6 @@ const Profile = ({ user, setUser }) => {
     if (storedProfile) {
       setProfileData(JSON.parse(storedProfile));
     } else if (user) {
-      // Simulate fetching profile data from API
       setTimeout(() => {
         const fetchedData = {
           fullName: user.fullName,
@@ -76,6 +75,10 @@ const Profile = ({ user, setUser }) => {
 
   const handleEditClick = () => {
     setIsEditing(true);
+  };
+
+  const handleShowBookings = () => {
+    navigate("/bookings"); // Navigate to /bookings without passing any state
   };
 
   if (!user) {
@@ -151,13 +154,11 @@ const Profile = ({ user, setUser }) => {
           <button onClick={handleEditClick} className="edit-profile-button">
             Edit Profile
           </button>
-          {/* Added Delete Profile Button */}
-          <button
-            onClick={handleDelete}
-            className="delete-profile-button"
-            style={{ marginLeft: "10px", color: "red" }}
-          >
+          <button onClick={handleDelete} className="delete-profile-button">
             Delete Profile
+          </button>
+          <button onClick={handleShowBookings} className="recent-bookings-button">
+            Recent Bookings
           </button>
         </>
       )}
@@ -169,4 +170,3 @@ const Profile = ({ user, setUser }) => {
 };
 
 export default Profile;
-//user management system

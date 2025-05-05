@@ -4,11 +4,12 @@ import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
-import MainFleet from "./MainFleet"; // ✅ Added
+import MainFleet from "./MainFleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
 import DriverOwner from "./driverOwner";
 import DriverDashboard from "./DriverDashboard";
+import Booking from "./Booking";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -34,13 +35,15 @@ function App() {
           <Routes>
             <Route path="/" element={<Home lastFrame={lastFrame} user={user} />} />
             <Route path="/login" element={<LoginSignup setUser={setUser} />} />
-            <Route path="/fleet" element={<MainFleet />} /> {/* ✅ Brand selector */}
-            <Route path="/fleet/:brand" element={<Fleet />} /> {/* ✅ Brand-specific */}
+            <Route path="/fleet" element={<MainFleet />} />
+            <Route path="/fleet/:brand" element={<Fleet />} />
             <Route path="/services" element={<div>Services Page</div>} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="/driver" element={<DriverOwner />} />
             <Route path="/driver-dashboard" element={<DriverDashboard />} />
+            <Route path="/bookings" element={<Booking />} />
+            <Route path="*" element={<div>404 - No Route Matched</div>} />
           </Routes>
         )}
       </div>
