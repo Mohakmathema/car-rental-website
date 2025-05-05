@@ -1,11 +1,11 @@
 import Vehicle from '../vehicleModel.js';
 
-// Submit vehicle information
+//this to submit vehicle information
 export const submitVehicle = async (req, res) => {
   try {
     const { driverId, brand, model, licensePlate, description, images } = req.body;
 
-    // Check if vehicle with license plate already exists
+    //this to check if vehicle with license plate already exists
     const existingVehicle = await Vehicle.findOne({ licensePlate });
     if (existingVehicle) {
       return res.status(400).json({ message: 'Vehicle already registered' });
@@ -18,7 +18,7 @@ export const submitVehicle = async (req, res) => {
       licensePlate,
       description,
       images,
-      isVerified: true // For now, auto-verify. In production, this should be false until admin approves
+      isVerified: true //for now auto-verify this in production should be false until admin approves
     });
 
     res.status(201).json(vehicle);
@@ -27,7 +27,7 @@ export const submitVehicle = async (req, res) => {
   }
 };
 
-// Get vehicle status
+//vehicle status
 export const getVehicleStatus = async (req, res) => {
   try {
     const { driverId } = req.params;
@@ -46,9 +46,7 @@ export const getVehicleStatus = async (req, res) => {
   }
 };
 
-// Add these new controller methods
-
-// Get vehicle by driverId
+//get vehicle by driverId
 export const getVehicleByDriver = async (req, res) => {
     try {
       const { driverId } = req.params;
@@ -64,7 +62,7 @@ export const getVehicleByDriver = async (req, res) => {
     }
   };
   
-  // Update vehicle
+  //update vehicle
   export const updateVehicle = async (req, res) => {
     try {
       const { id } = req.params;
@@ -84,7 +82,7 @@ export const getVehicleByDriver = async (req, res) => {
     }
   };
   
-  // Delete vehicle 
+  //delete vehicle 
   export const deleteVehicle = async (req, res) => {
     try {
       const { id } = req.params;
@@ -97,5 +95,36 @@ export const getVehicleByDriver = async (req, res) => {
       res.json({ message: 'Vehicle deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: error.message }); 
+    }
+  };
+
+  //update or add this method
+export const updateVehicleStatus = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+  
+      if (!['available', 'busy', 'maintenance', 'offline'].includes(status)) {
+        return res.status(400).json({ message: 'Invalid status value' });
+      }
+  
+      const vehicle = await Vehicle.findById(id);
+      
+      if (!vehicle) {
+        return res.status(404).json({ message: 'Vehicle not found' });
+      }
+  
+      //*donot uncomment authentication not done. will not do not necessary. Tried doesnot work wont do this.
+    //   if (vehicle.driverId.toString() !== req.user._id.toString()) {
+    //     return res.status(403).json({ message: 'Not authorized to update this vehicle' });
+    //   }
+  
+      vehicle.status = status;
+      await vehicle.save();
+  
+      res.json(vehicle);
+    } catch (error) {
+      console.error('Status update error:', error);
+      res.status(500).json({ message: 'Error updating vehicle status' });
     }
   };

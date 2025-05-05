@@ -4,7 +4,8 @@ import {
   getVehicleStatus,
   getVehicleByDriver,
   updateVehicle,
-  deleteVehicle 
+  deleteVehicle ,
+  updateVehicleStatus
 } from '../controllers/vehicleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -15,5 +16,6 @@ router.get('/status/:driverId', getVehicleStatus);
 router.get('/driver/:driverId', getVehicleByDriver);
 router.put('/:id', protect, updateVehicle);
 router.delete('/:id', protect, deleteVehicle);
+router.put('/:id/status', protect, updateVehicleStatus);
 
 export { router as default };
