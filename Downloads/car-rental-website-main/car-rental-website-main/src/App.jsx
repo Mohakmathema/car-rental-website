@@ -4,11 +4,11 @@ import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
+import MainFleet from "./MainFleet"; // ✅ Added
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
-// import AdminLogin from "./AdminLogin";
 import DriverOwner from "./driverOwner";
-import DriverDashboard from "./DriverDashboard"; // Add this import
+import DriverDashboard from "./DriverDashboard";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -32,20 +32,13 @@ function App() {
           />
         ) : (
           <Routes>
-            <Route
-              path="/"
-              element={<Home lastFrame={lastFrame} user={user} />}
-            />
+            <Route path="/" element={<Home lastFrame={lastFrame} user={user} />} />
             <Route path="/login" element={<LoginSignup setUser={setUser} />} />
-            <Route path="/fleet" element={<Fleet />} />
+            <Route path="/fleet" element={<MainFleet />} /> {/* ✅ Brand selector */}
+            <Route path="/fleet/:brand" element={<Fleet />} /> {/* ✅ Brand-specific */}
             <Route path="/services" element={<div>Services Page</div>} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route
-              path="/profile"
-              element={<Profile user={user} setUser={setUser} />}
-            />{" "}
-            {/* Add the profile route */}
-            {/* <Route path="/adminLogin" element={<AdminLogin />}></Route> */}
+            <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
             <Route path="/driver" element={<DriverOwner />} />
             <Route path="/driver-dashboard" element={<DriverDashboard />} />
           </Routes>

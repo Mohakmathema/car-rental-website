@@ -1,12 +1,14 @@
-// src/fleet.jsx
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './fleet.css'; // Your existing CSS
+import { useParams } from 'react-router-dom'; // 🧠 Import useParams
+import './fleet.css';
 
 const Fleet = () => {
+  const { brand } = useParams(); // 🔥 Get brand from route (e.g., "bmw")
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/cars')
@@ -20,20 +22,61 @@ const Fleet = () => {
       });
   }, []);
 
+  const filteredCars = cars.filter(car => {
+    const matchesBrand = brand ? car.brand.toLowerCase() === brand.toLowerCase() : true;
+    const matchesSearch = car.brand.toLowerCase().includes(search.toLowerCase());
+    const matchesFilter =
+      filter === 'all' ||
+      (filter === 'available' && car.available) ||
+      (filter === 'unavailable' && !car.available);
+    return matchesBrand && matchesSearch && matchesFilter;
+  });
+
+  const getCardClass = (car) => {
+    const base = `${car.brand.toLowerCase().replace(/\s+/g, '')}-card`;
+    return `car-card ${base} ${!car.available ? 'unavailable' : ''}`;
+  };
+
   if (loading) return <div>Loading cars...</div>;
 
   return (
     <div className="fleet-container">
-      <h1>Our Fleet</h1>
-      <div className="fleet-grid">
-        {cars.map(car => (
-          <div key={car._id} className="car-card">
-            <img src={car.image} alt={car.brand} className="car-image" />
-            <h2>{car.brand}</h2>
-            <p>Price per day: ₹{car.price}</p>
-            <p>Available: {car.available ? 'Yes' : 'No'}</p>
+      <header>
+        <h2>{brand ? `${brand} Cars` : 'Our Fleet'}</h2>
+        <div className="search-filter-row">
+          <input
+            type="text"
+            placeholder="Search by brand..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="search-bar"
+          />
+          <div className="filters">
+            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+              <option value="all">All</option>
+              <option value="available">Available Only</option>
+              <option value="unavailable">Unavailable Only</option>
+            </select>
           </div>
-        ))}
+        </div>
+      </header>
+
+      <div className="fleet-grid">
+        {filteredCars.length > 0 ? (
+          filteredCars.map(car => (
+            <div key={car._id} className={getCardClass(car)}>
+              {!car.available && <div className="unavailable-badge">Unavailable</div>}
+              <img src={car.image} alt={car.brand} className="car-image" />
+              <h3 className="car-name">{car.brand}</h3>
+              <p>Price per day: ₹{car.price}</p>
+              <div className="car-description">
+                {car.available ? 'Luxury Cars' : 'Currently Unavailable'}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="no-results">No cars found for {brand}.</div>
+        )}
       </div>
     </div>
   );
