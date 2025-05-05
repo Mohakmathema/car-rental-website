@@ -6,9 +6,13 @@ import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
-// import AdminLogin from "./AdminLogin";
 import DriverOwner from "./driverOwner";
-import DriverDashboard from "./DriverDashboard"; // Add this import
+import DriverDashboard from "./DriverDashboard";
+import DriverLayout from "./DriverLayout";
+import DriverBookings from "./DriverBookings";
+import DriverVehicle from "./DriverVehicle";
+import DriverHistory from "./DriverHistory";
+import DriverSettings from "./DriverSettings";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -22,35 +26,69 @@ function App() {
     }
   }, []);
 
+  if (loading) {
+    return (
+      <Loader
+        onComplete={() => setLoading(false)}
+        setLastFrame={setLastFrame}
+      />
+    );
+  }
+
   return (
     <Router>
-      <div>
-        {loading ? (
-          <Loader
-            onComplete={() => setLoading(false)}
-            setLastFrame={setLastFrame}
-          />
-        ) : (
-          <Routes>
-            <Route
-              path="/"
-              element={<Home lastFrame={lastFrame} user={user} />}
-            />
-            <Route path="/login" element={<LoginSignup setUser={setUser} />} />
-            <Route path="/fleet" element={<Fleet />} />
-            <Route path="/services" element={<div>Services Page</div>} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route
-              path="/profile"
-              element={<Profile user={user} setUser={setUser} />}
-            />{" "}
-            {/* Add the profile route */}
-            {/* <Route path="/adminLogin" element={<AdminLogin />}></Route> */}
-            <Route path="/driver" element={<DriverOwner />} />
-            <Route path="/driver-dashboard" element={<DriverDashboard />} />
-          </Routes>
-        )}
-      </div>
+      <Routes>
+        <Route path="/" element={<Home lastFrame={lastFrame} user={user} />} />
+        <Route path="/login" element={<LoginSignup setUser={setUser} />} />
+        <Route path="/fleet" element={<Fleet />} />
+        <Route path="/services" element={<div>Services Page</div>} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route
+          path="/profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
+        <Route path="/driver" element={<DriverOwner />} />
+        <Route
+          path="/driver-dashboard"
+          element={
+            <DriverLayout>
+              <DriverDashboard />
+            </DriverLayout>
+          }
+        />
+        <Route
+          path="/driver-dashboard/bookings"
+          element={
+            <DriverLayout>
+              <DriverBookings />
+            </DriverLayout>
+          }
+        />
+        <Route
+          path="/driver-dashboard/vehicle"
+          element={
+            <DriverLayout>
+              <DriverVehicle />
+            </DriverLayout>
+          }
+        />
+        <Route
+          path="/driver-dashboard/history"
+          element={
+            <DriverLayout>
+              <DriverHistory />
+            </DriverLayout>
+          }
+        />
+        <Route
+          path="/driver-dashboard/settings"
+          element={
+            <DriverLayout>
+              <DriverSettings />
+            </DriverLayout>
+          }
+        />
+      </Routes>
     </Router>
   );
 }
