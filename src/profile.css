@@ -2,6 +2,100 @@ body {
   overflow-y: scroll;
 }
 
+/* Button container styles */
+.profile-container > div:not(.profile-section):not(.password-change-overlay) {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 0 20px;
+  flex-wrap: nowrap;
+}
+
+/* Common button styles */
+.logout-button,
+.edit-profile-button,
+.save-button,
+.change-password-button,
+.delete-profile-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Arial", sans-serif;
+  letter-spacing: 1px;
+  min-width: 140px;
+  text-align: center;
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Button colors */
+.edit-profile-button {
+  background-color: #4285f4;
+}
+
+.change-password-button {
+  background-color: #4caf50;
+}
+
+.delete-profile-button {
+  background-color: white;
+}
+
+.logout-button {
+  background-color: #d32f2f;
+}
+
+/* Hover effects */
+.edit-profile-button:hover,
+.change-password-button:hover,
+.delete-profile-button:hover,
+.logout-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.edit-profile-button:hover {
+  background-color: #286090;
+}
+
+.change-password-button:hover {
+  background-color: #388e3c;
+}
+
+.delete-profile-button:hover {
+  background-color: rgb(175, 175, 175);
+}
+
+.logout-button:hover {
+  background-color: #b71c1c;
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .profile-container > div:not(.profile-section):not(.password-change-overlay) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logout-button,
+  .edit-profile-button,
+  .save-button,
+  .change-password-button,
+  .delete-profile-button {
+    font-size: 0.9em;
+    padding: 10px 15px;
+    min-width: 120px;
+  }
+}
+
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -138,6 +232,84 @@ body {
 .profile-section input[type="email"]:focus {
   border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* Add to existing CSS */
+
+.change-password-button {
+  background-color: #4caf50;
+  margin: 10px;
+}
+
+.change-password-button:hover {
+  background-color: #388e3c;
+}
+
+.password-change-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.password-change-modal {
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.password-change-modal h3 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.password-change-modal .form-group {
+  margin-bottom: 15px;
+}
+
+.password-change-modal label {
+  display: block;
+  margin-bottom: 5px;
+  color: #ddd;
+}
+
+.password-change-modal input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.password-change-modal .button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  background: #666;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cancel-button:hover {
+  background: #555;
 }
 
 /* Media Query for responsiveness */

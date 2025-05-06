@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
+import { div } from "framer-motion/client";
 
 const Profile = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -11,6 +12,13 @@ const Profile = ({ user, setUser }) => {
     carPreferences: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
     const storedProfile = localStorage.getItem("userInfo");
@@ -76,6 +84,66 @@ const Profile = ({ user, setUser }) => {
 
   const handleEditClick = () => {
     setIsEditing(true);
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    setPasswordError("");
+
+    console.log("New Password:", passwordData.newPassword);
+    console.log("Confirm Password:", passwordData.confirmNewPassword);
+    console.log(
+      "Do passwords match?",
+      passwordData.newPassword === passwordData.confirmNewPassword
+    );
+
+    if (
+      !passwordData.currentPassword ||
+      !passwordData.newPassword ||
+      !passwordData.confirmNewPassword
+    ) {
+      setPasswordError("All password fields are required");
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmNewPassword) {
+      setPasswordError("New passwords do not match");
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/users/${user._id}/change-password`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            currentPassword: passwordData.currentPassword,
+            newPassword: passwordData.newPassword,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to update password");
+      }
+      // if (response.ok) {
+      alert("Password updated successfully");
+      setIsChangingPassword(false);
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+      });
+      // } else {
+      //   setPasswordError(data.message || "Failed to update password");
+      // }
+    } catch (error) {
+      console.error(error);
+      setPasswordError("An error occurred while updating password");
+    }
   };
 
   if (!user) {
@@ -151,6 +219,12 @@ const Profile = ({ user, setUser }) => {
           <button onClick={handleEditClick} className="edit-profile-button">
             Edit Profile
           </button>
+          <button
+            onClick={() => setIsChangingPassword(true)}
+            className="change-password-button"
+          >
+            Change Password
+          </button>
           {/* Added Delete Profile Button */}
           <button
             onClick={handleDelete}
@@ -160,6 +234,80 @@ const Profile = ({ user, setUser }) => {
             Delete Profile
           </button>
         </>
+      )}
+      {isChangingPassword && (
+        <div className="password-change-overlay">
+          <div className="password-change-modal">
+            <h3>Change Password</h3>
+            {passwordError && (
+              <div className="error-message">{passwordError}</div>
+            )}
+            <form onSubmit={handlePasswordChange}>
+              <div className="form-group">
+                <label>Current Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      currentPassword: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>New Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      newPassword: e.target.value.trim(),
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Confirm new Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.confirmNewPassword}
+                  onChange={(e) =>
+                    setPasswordData({
+                      ...passwordData,
+                      confirmNewPassword: e.target.value.trim(),
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className="button-group">
+                <button type="submit" className="save-button">
+                  Update Password
+                </button>
+                <button
+                  type="button"
+                  className="cancel-button"
+                  onClick={() => {
+                    setIsChangingPassword(false);
+                    setPasswordError("");
+                    setPasswordData({
+                      currentPassword: "",
+                      newPassword: "",
+                      confirmNewPassword: "",
+                    });
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
       <button onClick={handleLogout} className="logout-button">
         Logout

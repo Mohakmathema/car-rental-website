@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 // Generate JWT
 const generateToken = (id) => {
@@ -139,5 +140,63 @@ export const deleteUser = async (req, res) => {
     res.json({ message: 'User deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Delete failed', error });
+  }
+};
+
+// export const changePassword = async (req, res) => {
+//   try {
+//     const { currentPassword, newPassword } = req.body;
+//     const userId = req.params.id;
+//     const user = await User.findById(userId);
+
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     // Check if current password matches
+//     const isMatch = await user.matchPassword(currentPassword);
+//     if (!isMatch) {
+//       return res.status(400).json({ message: 'Current password is incorrect' });
+//     }
+
+//     // Update password
+//     user.password = newPassword;
+//     await user.save();
+
+//     res.json({ message: 'Password updated successfully' });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error updating password', error: error.message });
+//   }
+// };
+
+export const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const userId = req.params.id;
+
+    // Find user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if current password is correct
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Password update error:', error);
+    res.status(500).json({ message: 'Error updating password', error: error.message });
   }
 };
