@@ -28,9 +28,9 @@ const DriverSidebar = () => {
           Bookings
         </Link>
         <Link
-          to="/driver-dashboard/vehicle"
+          to="/driver-dashboard/vehicles" // Changed from /vehicle to /vehicles
           className={`nav-item ${
-            location.pathname === "/driver-dashboard/vehicle" ? "active" : ""
+            location.pathname === "/driver-dashboard/vehicles" ? "active" : ""
           }`}
         >
           Vehicle

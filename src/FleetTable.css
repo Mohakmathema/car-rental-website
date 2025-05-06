@@ -1,0 +1,142 @@
+.fleet-table-container {
+    max-width: 1400px; /* Wider for websites */
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #d3d3d3; /* Darker grey */
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.fleet-table-header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.fleet-table-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-input {
+    padding: 14px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    width: 400px; /* bigger search */
+    font-size: 16px;
+}
+
+.fleet-table-wrapper {
+    overflow-x: auto;
+}
+
+.fleet-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    font-size: 16px; /* bigger font */
+}
+
+.fleet-table th, .fleet-table td {
+    padding: 18px 24px; /* bigger cells */
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    color: #000000; /* Black text */
+}
+
+.fleet-table thead {
+    background-color: #d3d3d3; /* Darker grey */
+}
+
+.fleet-table th {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fleet-table tr:hover {
+    background-color: #d3d3d3; /* Darker grey for hover */
+    transition: background-color 0.3s;
+}
+
+.selected {
+    background-color: #e6f4ff;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.available {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.unavailable {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.add-btn, .delete-btn, .export-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn:hover, .delete-btn:hover, .export-btn:hover {
+    background-color: #0056b3;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #999;
+}
+
+.add-new-form {
+    background: #d3d3d3; /* Darker grey */
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-new-form h3 {
+    margin-bottom: 15px;
+}
+
+.add-new-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-new-form input,
+.add-new-form select {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}

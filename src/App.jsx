@@ -15,6 +15,7 @@ import DriverVehicle from "./DriverVehicle";
 import DriverHistory from "./DriverHistory";
 import DriverSettings from "./DriverSettings";
 import Booking from "./Booking";
+import FleetTable from "./fleetTable";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -63,10 +64,10 @@ function App() {
               }
             />
             <Route
-              path="/driver-dashboard/vehicle"
+              path="/driver-dashboard/vehicles" // New route for FleetTable
               element={
                 <DriverLayout>
-                  <DriverVehicle />
+                  <FleetTable />
                 </DriverLayout>
               }
             />
@@ -87,6 +88,7 @@ function App() {
               }
             />
             <Route path="/bookings" element={<Booking />} />
+            <Route path="/admin/vehicles" element={<FleetTable />} />
             <Route path="*" element={<div>404 - No Route Matched</div>} />
           </Routes>
         )}
