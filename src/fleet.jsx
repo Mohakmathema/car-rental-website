@@ -1,48 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // 🧠 Import useParams
+import { useParams } from 'react-router-dom';
 import './fleet.css';
 
 const Fleet = () => {
-  const { brand } = useParams(); // 🔥 Get brand from route (e.g., "bmw")
-  const [cars, setCars] = useState([]);
+  const { brand } = useParams();
+  const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/cars')
-      .then(response => {
-        setCars(response.data);
+    const fetchVehicles = async () => {
+      try {
+        // Retrieve token from localStorage
+        const token = localStorage.getItem("driverInfo")
+          ? JSON.parse(localStorage.getItem("driverInfo")).token
+          : localStorage.getItem("token");
+
+        const config = token ? {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        } : {};
+
+        const response = await axios.get('http://localhost:5000/api/vehicles', config);
+        console.log('API Response:', response.data); // Debug log
+
+        // Expecting { status: 'success', data: [...] }
+        if (response.data.status === 'success' && Array.isArray(response.data.data)) {
+          setVehicles(response.data.data);
+        } else {
+          setError('Unexpected data format from API');
+        }
         setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching cars:', error);
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+        if (error.response) {
+          // HTTP error (e.g., 401, 500)
+          setError(
+            error.response.status === 401
+              ? 'Unauthorized. Please log in to view the fleet.'
+              : `Failed to fetch vehicles: ${error.response.data.message || error.message}`
+          );
+        } else {
+          // Network or other error
+          setError('Cannot connect to the server. Please check your connection and try again.');
+        }
         setLoading(false);
-      });
+      }
+    };
+
+    fetchVehicles();
   }, []);
 
-  const filteredCars = cars.filter(car => {
-    const matchesBrand = brand ? car.brand.toLowerCase() === brand.toLowerCase() : true;
-    const matchesSearch = car.brand.toLowerCase().includes(search.toLowerCase());
+  const filteredVehicles = vehicles.filter(vehicle => {
+    const matchesBrand = brand ? vehicle.brand.toLowerCase() === brand.toLowerCase().trim() : true;
+    const matchesSearch = vehicle.brand.toLowerCase().includes(search.toLowerCase().trim());
     const matchesFilter =
       filter === 'all' ||
-      (filter === 'available' && car.available) ||
-      (filter === 'unavailable' && !car.available);
+      (filter === 'available' && vehicle.isVerified) ||
+      (filter === 'unavailable' && !vehicle.isVerified);
     return matchesBrand && matchesSearch && matchesFilter;
   });
 
-  const getCardClass = (car) => {
-    const base = `${car.brand.toLowerCase().replace(/\s+/g, '')}-card`;
-    return `car-card ${base} ${!car.available ? 'unavailable' : ''}`;
+  const getCardClass = (vehicle) => {
+    const base = `${vehicle.brand.toLowerCase().replace(/\s+/g, '')}-card`;
+    return `car-card ${base} ${!vehicle.isVerified ? 'unavailable' : ''}`;
   };
 
-  if (loading) return <div>Loading cars...</div>;
+  if (loading) return <div className="loading-message">Loading vehicles...</div>;
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <div className="fleet-container">
       <header>
-        <h2>{brand ? `${brand} Cars` : 'Our Fleet'}</h2>
+        <h2>{brand ? `${brand} Vehicles` : 'Our Fleet'}</h2>
         <div className="search-filter-row">
           <input
             type="text"
@@ -62,20 +96,25 @@ const Fleet = () => {
       </header>
 
       <div className="fleet-grid">
-        {filteredCars.length > 0 ? (
-          filteredCars.map(car => (
-            <div key={car._id} className={getCardClass(car)}>
-              {!car.available && <div className="unavailable-badge">Unavailable</div>}
-              <img src={car.image} alt={car.brand} className="car-image" />
-              <h3 className="car-name">{car.brand}</h3>
-              <p>Price per day: ₹{car.price}</p>
+        {filteredVehicles.length > 0 ? (
+          filteredVehicles.map(vehicle => (
+            <div key={vehicle._id} className={getCardClass(vehicle)}>
+              {!vehicle.isVerified && <div className="unavailable-badge">Unavailable</div>}
+              <img
+                src={vehicle.images && vehicle.images.length > 0 && vehicle.images[0] ? vehicle.images[0] : 'https://via.placeholder.com/150'}
+                alt={`${vehicle.brand} ${vehicle.model}`}
+                className="car-image"
+                onError={(e) => (e.target.src = 'https://via.placeholder.com/150')} // Fallback on error
+              />
+              <h3 className="car-name">{vehicle.brand} {vehicle.model}</h3>
+              <p>License: {vehicle.licensePlate}</p>
               <div className="car-description">
-                {car.available ? 'Luxury Cars' : 'Currently Unavailable'}
+                {vehicle.isVerified ? 'Available for Rent' : 'Currently Unavailable'}
               </div>
             </div>
           ))
         ) : (
-          <div className="no-results">No cars found for {brand}.</div>
+          <div className="no-results">No vehicles found for {brand || 'this search'}.</div>
         )}
       </div>
     </div>
