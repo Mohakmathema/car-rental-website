@@ -1,38 +1,42 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import driverRoutes from './routes/driverRoutes.js';
 import vehicleRoutes from './routes/vehicleRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
-
-
-//loading the env variable
 dotenv.config();
-
-//connecting to the database with function
-connectDB();
 
 const app = express();
 
-//callning the middleware user
+// Middleware
 app.use(cors());
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb', extended: true}));
+app.use(express.json());
 
-//calling the routes server
+// Connect to MongoDB
+connectDB();
+
+// Routes
 app.use('/api/users', userRoutes);
-
 app.use('/api/drivers', driverRoutes);
-
 app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/admin', adminRoutes);
 
-//getting the basic route with API
-app.get('/', (req, res) => {
-  res.send('API is running...');
+// Error handling middleware
+app.use((err, req, res, next) => {
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  res.status(statusCode);
+  res.json({
+    message: err.message,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+  });
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log('MongoDB Connected:', process.env.MONGO_URI);
+});

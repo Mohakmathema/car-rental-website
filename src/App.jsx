@@ -13,6 +13,14 @@ import DriverBookings from "./DriverBookings";
 import DriverVehicle from "./DriverVehicle";
 import DriverHistory from "./DriverHistory";
 import DriverSettings from "./DriverSettings";
+import AdminLogin from "./AdminLogin";
+import AdminDashboard from "./AdminDashboard";
+import AdminLayout from "./AdminLayout";
+import Dashboard from "./Dashboard";
+import ViewUsers from "./ViewUsers";
+import ViewDrivers from "./ViewDrivers";
+import EditFleet from "./EditFleet";
+import EditCars from "./EditCars";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -88,6 +96,23 @@ function App() {
             </DriverLayout>
           }
         />
+
+        {/* <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminLayout />} />
+        <Route index element={<Dashboard />} />
+        <Route path="users" element={<ViewUsers />} />
+        <Route path="drivers" element={<ViewDrivers />} />
+        <Route path="fleet" element={<EditFleet />} />
+        <Route path="cars" element={<EditCars />} /> */}
+
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="users" element={<ViewUsers />} />
+          <Route path="drivers" element={<ViewDrivers />} />
+          <Route path="fleet" element={<EditFleet />} />
+          <Route path="cars" element={<EditCars />} />
+        </Route>
       </Routes>
     </Router>
   );

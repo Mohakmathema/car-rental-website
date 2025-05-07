@@ -215,6 +215,28 @@ const LoginSignup = ({ setUser }) => {
               </Link>
             </p>
           </div>
+          <div
+            className="admin-link"
+            style={{
+              marginTop: "10px",
+              textAlign: "center",
+              color: "#fff",
+            }}
+          >
+            <p>
+              Are you an admin?{" "}
+              <Link
+                to="/admin-login"
+                style={{
+                  color: "#e74c3c",
+                  textDecoration: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                Click here
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

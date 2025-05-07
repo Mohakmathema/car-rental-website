@@ -1,62 +1,41 @@
-/* .admin-login-container {
+.admin-login-container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #222 0%, #333 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   padding: 20px;
 }
 
 .admin-auth-box {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 40px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .admin-auth-box h2 {
   color: #fff;
-  font-family: "Italiana", sans-serif;
-  font-size: 2.5em;
   text-align: center;
   margin-bottom: 30px;
-  letter-spacing: 2px;
-  position: relative;
-}
-
-.admin-auth-box h2:after {
-  content: "";
-  position: absolute;
-  width: 60px;
-  height: 3px;
-  background: #4a90e2;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.admin-error-message {
-  background-color: rgba(255, 0, 0, 0.1);
-  color: #ff6b6b;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  text-align: center;
-  animation: fadeIn 0.3s ease forwards;
+  font-size: 2em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .admin-auth-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-top: 25px;
 }
 
 .admin-auth-form input {
+  width: 100%;
   padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
@@ -68,8 +47,9 @@
 
 .admin-auth-form input:focus {
   outline: none;
-  border-color: rgba(74, 144, 226, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .admin-auth-form input::placeholder {
@@ -77,34 +57,47 @@
 }
 
 .admin-submit-btn {
+  background: #e74c3c;
+  color: white;
   padding: 15px;
   border: none;
   border-radius: 10px;
-  background: #4a90e2;
-  color: #fff;
   font-size: 1.1em;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Italiana", sans-serif;
+  text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: 10px;
 }
 
 .admin-submit-btn:hover {
-  background: #3a80d2;
+  background: #c0392b;
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
 }
 
 .admin-submit-btn:disabled {
-  background: rgba(74, 144, 226, 0.5);
+  background: #95a5a6;
   cursor: not-allowed;
   transform: none;
 }
 
+.admin-error-message {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
 .admin-footer-links {
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  gap: 15px;
 }
 
 .admin-back-link {
@@ -119,11 +112,78 @@
   text-decoration: underline;
 }
 
+/* ...existing code... */
+
+.admin-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.admin-auth-form input {
+  width: calc(100% - 0px); /* Subtracting padding from total width */
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.admin-submit-btn {
+  width: 100%; /* Make button full width */
+  background: #e74c3c;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* ...rest of existing code... */
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .admin-auth-box {
+    padding: 30px 20px;
+  }
+
+  .admin-auth-box h2 {
+    font-size: 1.5em;
+  }
+
+  .admin-auth-form input {
+    padding: 12px;
+  }
+
+  .admin-footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
-} */
+}
+
+.admin-auth-box {
+  animation: fadeIn 0.5s ease-out;
+}
