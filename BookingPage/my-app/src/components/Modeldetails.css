@@ -1,0 +1,138 @@
+/* Popup Modal */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* dimmed background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-modal {
+  background: #fff;
+  color: #000;
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-modal p {
+  margin: 10px 0;
+}
+
+.close-btn {
+  margin-top: 20px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Booking Buttons */
+.booking-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.request-approval,
+.cancel-booking {
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Request Approval Button */
+.request-approval {
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+/* Cancel Booking Button */
+.cancel-booking {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+}
+/* Navbar Container */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #111;
+  padding: 10px 20px;
+  color: white;
+}
+
+/* Back Button */
+.back-button {
+  font-size: 20px;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-bar input {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+}
+
+.search-icon {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 6px 12px;
+  transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+  background-color: #007bff;
+  border-radius: 4px;
+}
