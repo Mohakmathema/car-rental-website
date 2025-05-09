@@ -1,4 +1,4 @@
-import Driver from '../driverModel.js';
+import Driver from '../models/driverModel.js';
 import jwt from 'jsonwebtoken';
 
 const generateToken = (id) => {

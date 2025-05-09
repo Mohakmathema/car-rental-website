@@ -1,0 +1,112 @@
+.car-panel-container {
+    font-family: sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .main-content {
+    padding: 1rem 0;
+    text-align: center;
+
+  }
+  
+  h2 {
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+    font-size: 3rem;
+    font-family: Georgia;
+    font-weight: normal;
+    color: #ffffff;
+    text-align: center;
+    
+  }
+  
+  .search-sort-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .search-bar {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  #sortDropdown {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #999;
+    font-size: 1rem;
+  }
+  
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    justify-items: center;
+  }
+  
+  .brand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .brand-item {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+  }
+  
+  .brand-item:hover {
+    border: 2px solid #6f3bf4;
+  }
+  
+  .brand-image {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    border-radius: 50%;
+    background: transparent;
+    display: block; /* Ensure the image is visible by default */
+  }
+  
+  .brand-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    color: white;
+    font-weight: bold;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .brand-name {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font: "poppins";
+    font-weight: normal;
+    color: #ffffff;
+    text-align: center;
+  }
