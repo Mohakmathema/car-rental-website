@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Loader from "./loader";
-import Home from "./home";
-import LoginSignup from "./loginSignup";
-import Fleet from "./fleet";
-import Profile from "./profile";
-import ContactUs from "./ContactUs";
-import DriverOwner from "./driverOwner";
-import DriverDashboard from "./DriverDashboard";
-import DriverLayout from "./DriverLayout";
-import DriverBookings from "./DriverBookings";
-import DriverVehicle from "./DriverVehicle";
-import DriverHistory from "./DriverHistory";
-import DriverSettings from "./DriverSettings";
-import AdminLogin from "./AdminLogin";
-import AdminDashboard from "./AdminDashboard";
+import React, { useEffect, useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AboutUs from './AboutUs';
 import AdminLayout from "./AdminLayout";
+import AdminLogin from "./AdminLogin";
+import ContactUs from "./ContactUs";
 import Dashboard from "./Dashboard";
-import ViewUsers from "./ViewUsers";
-import ViewDrivers from "./ViewDrivers";
-import EditFleet from "./EditFleet";
+import DriverBookings from "./DriverBookings";
+import DriverDashboard from "./DriverDashboard";
+import DriverHistory from "./DriverHistory";
+import DriverLayout from "./DriverLayout";
+import DriverOwner from "./driverOwner";
+import DriverSettings from "./DriverSettings";
+import DriverVehicle from "./DriverVehicle";
 import EditCars from "./EditCars";
+import EditFleet from "./EditFleet";
+import Faq from './Faq';
+import Fleet from "./fleet";
+import Home from "./home";
+import Loader from "./loader";
+import LoginSignup from "./loginSignup";
+import Profile from "./profile";
+import Terms from './Terms';
+import ViewDrivers from "./ViewDrivers";
+import ViewUsers from "./ViewUsers";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -51,6 +53,9 @@ function App() {
         <Route path="/fleet" element={<Fleet />} />
         <Route path="/services" element={<div>Services Page</div>} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="about" element={<AboutUs />} />
+        <Route path="faq" element={<Faq />} />
+        <Route path="terms" element={<Terms />} />
         <Route
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}
@@ -112,6 +117,9 @@ function App() {
           <Route path="drivers" element={<ViewDrivers />} />
           <Route path="fleet" element={<EditFleet />} />
           <Route path="cars" element={<EditCars />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="terms" element={<Terms />} />
         </Route>
       </Routes>
     </Router>
