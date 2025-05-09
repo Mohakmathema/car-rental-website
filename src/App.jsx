@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
+import MainFleet from "./MainFleet";
 import Fleet from "./fleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
@@ -21,6 +22,7 @@ import ViewUsers from "./ViewUsers";
 import ViewDrivers from "./ViewDrivers";
 import EditFleet from "./EditFleet";
 import EditCars from "./EditCars";
+import Services from "./Services"; // Import Services component
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -48,8 +50,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home lastFrame={lastFrame} user={user} />} />
         <Route path="/login" element={<LoginSignup setUser={setUser} />} />
-        <Route path="/fleet" element={<Fleet />} />
-        <Route path="/services" element={<div>Services Page</div>} />
+        <Route path="/fleet" element={<MainFleet />} />
+        <Route path="/fleet/:brand" element={<Fleet />} />
+        <Route path="/services" element={<Services />} /> {/* Updated route */}
         <Route path="/contact" element={<ContactUs />} />
         <Route
           path="/profile"
@@ -96,15 +99,6 @@ function App() {
             </DriverLayout>
           }
         />
-
-        {/* <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminLayout />} />
-        <Route index element={<Dashboard />} />
-        <Route path="users" element={<ViewUsers />} />
-        <Route path="drivers" element={<ViewDrivers />} />
-        <Route path="fleet" element={<EditFleet />} />
-        <Route path="cars" element={<EditCars />} /> */}
-
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />

@@ -4,13 +4,18 @@ import {
   getVehicleStatus,
   getVehicleByDriver,
   updateVehicle,
-  deleteVehicle ,
-  updateVehicleStatus
+  deleteVehicle,
+  updateVehicleStatus,
+  getAllVehicles // This should now work after updating the controller
 } from '../controllers/vehicleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+// Add new route to fetch all vehicles
+router.get('/', getAllVehicles);
+
+// Existing routes
 router.post('/submit', protect, submitVehicle);
 router.get('/status/:driverId', getVehicleStatus);
 router.get('/driver/:driverId', getVehicleByDriver);
