@@ -1,6 +1,8 @@
 import User from '../models/userModel.js';
-import Driver from '../driverModel.js';
-import Vehicle from '../vehicleModel.js';
+import Driver from '../models/driverModel.js'; // ✅ CORRECT
+
+import Vehicle from '../models/VehicleModel.js';
+
 import Category from '../categoryModel.js';
 
 // Stats controllers

@@ -1,0 +1,237 @@
+.booking-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0e0c0c;
+    padding: 20px;
+  }
+  
+  .booking-card {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .booking-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #000;
+    color: white;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  
+  .car-summary {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .car-thumbnail {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 20px;
+  }
+  
+  .car-summary-details h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .car-summary-details p {
+    margin: 5px 0;
+    color: #0c0b0b;
+  }
+  
+  .booking-form {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    color: black;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  #email {
+    background-color: #aea7a7; 
+    border: 1px solid #111213; 
+    color: #333333;
+  }
+  /* Select and file input styling */
+select,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #aea7a7;
+  color: #333;
+}
+
+small {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+
+  
+  /* Styling for the Full Name input field */
+  #name {
+    background-color: #aea7a7; 
+    border: 1px solid #111213; 
+    color: #333333; 
+  }
+  #phone {
+    background-color: #aea7a7; 
+    border: 1px solid #111213; 
+    color: #333333; 
+  }
+  #pickup-date {
+    background-color: #aea7a7; 
+    border: 1px solid #111213; 
+    color: #333333; 
+  }
+  #return-date {
+    background-color: #aea7a7; 
+    border: 1px solid #111213; 
+    color: #333333; 
+  }
+  #pickup-location {
+    background-color: #070707; 
+    border: 1px solid #111213; 
+    color: #333333; 
+  }
+  
+  
+  
+  
+  
+  
+  
+  .payment-summary {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #161515;
+    border-radius: 10px;
+  }
+  
+  .payment-summary h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .payment-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .payment-row.total {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    font-weight: bold;
+  }
+  
+  .confirm-booking-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .confirm-booking-button:hover {
+    background-color: #333;
+  }
+
+select,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #aea7a7;
+  color: #333;
+}
+
+small {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #666;
+}
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.confirm-booking-button,
+.cancel-booking-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.confirm-booking-button {
+  background-color: #28a745; /* green */
+}
+
+.cancel-booking-button {
+  background-color: #dc3545; /* red */
+}
+
+  

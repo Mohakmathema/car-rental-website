@@ -4,13 +4,22 @@ import {
   getVehicleStatus,
   getVehicleByDriver,
   updateVehicle,
-  deleteVehicle ,
-  updateVehicleStatus
+  deleteVehicle,
+  updateVehicleStatus,
+  getAllVehicles,
+  getVehicleById
 } from '../controllers/vehicleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+// Fetch all vehicles
+router.get('/', getAllVehicles);
+
+// Fetch single vehicle by ID
+router.get('/:id', protect, getVehicleById);
+
+// Existing routes
 router.post('/submit', protect, submitVehicle);
 router.get('/status/:driverId', getVehicleStatus);
 router.get('/driver/:driverId', getVehicleByDriver);
