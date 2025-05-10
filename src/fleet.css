@@ -139,6 +139,12 @@ header h2 {
   height: var(--card-size);
   display: flex;
   flex-direction: column;
+  text-decoration: none; /* Remove Link underline */
+  color: inherit; /* Prevent Link color changes */
+}
+
+.car-card:visited {
+  color: inherit; /* Prevent purple visited link color */
 }
 
 .car-card:hover {
@@ -199,9 +205,9 @@ header h2 {
   z-index: 2;
 }
 
-.car-number {
+.license-plate {
   font-size: 0.9rem;
-  color: var(--text-dark);
+  color: #ffffff !important; /* Force white color for license plate */
   opacity: 0.7;
   margin: 0.25rem 0;
   text-align: center;
@@ -364,7 +370,7 @@ header h2 {
     top: 3.5rem;
   }
 
-  .car-number {
+  .license-plate {
     font-size: 0.8rem;
   }
 

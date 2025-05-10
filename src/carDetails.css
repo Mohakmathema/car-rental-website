@@ -1,0 +1,306 @@
+/* Scope all styles with a parent class to prevent conflicts */
+.car-details-wrapper {
+  /* This wrapper class will scope all the styles */
+}
+
+/* Loading and error messages */
+.car-details-wrapper .car-details-loading,
+.car-details-wrapper .car-details-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.car-details-wrapper .car-details-error button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Main container styles */
+.car-details-wrapper .car-details-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #e2e2e2;
+  padding: 1rem;
+}
+
+.car-details-wrapper .car-details-card {
+  position: relative;
+  width: 90%;
+  max-width: 1200px; /* Increased max-width significantly */
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: #000000;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Header styles */
+.car-details-wrapper .car-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px; /* Increased horizontal padding */
+}
+
+.car-details-wrapper .car-details-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+}
+
+.car-details-wrapper .car-details-arrow-left {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(135deg);
+  margin-right: 3px;
+}
+
+.car-details-wrapper .car-details-search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px; /* Added max-width for better proportion */
+  margin: 0 32px; /* Increased margin */
+}
+
+.car-details-wrapper .car-details-search-input {
+  width: 100%;
+  padding: 10px 40px 10px 20px; /* Increased padding */
+  background-color: #333;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-size: 16px; /* Increased font size */
+}
+
+.car-details-wrapper .car-details-search-input::placeholder {
+  color: #aaa;
+}
+
+.car-details-wrapper .car-details-search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px; /* Increased size */
+  height: 16px; /* Increased size */
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.car-details-wrapper .car-details-search-icon::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 10px; /* Increased size */
+  background-color: #fff;
+  bottom: -8px;
+  right: -2px;
+  transform: rotate(45deg);
+}
+
+.car-details-wrapper .car-details-nav-links {
+  display: flex;
+  margin-right: 32px; /* Increased margin */
+}
+
+.car-details-wrapper .car-details-nav-link {
+  font-size: 16px; /* Increased font size */
+  margin-left: 24px; /* Increased spacing */
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.car-details-wrapper .car-details-nav-link:first-child {
+  margin-left: 0;
+}
+
+.car-details-wrapper .car-details-profile-avatar {
+  width: 44px; /* Increased size */
+  height: 44px; /* Increased size */
+  border-radius: 50%;
+  background-color: #444;
+}
+
+/* Car image styles */
+.car-details-wrapper .car-details-image-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0; /* Increased padding */
+  position: relative;
+  width: 100%;
+  background-color: #111; /* Slightly lighter black for contrast */
+}
+
+.car-details-wrapper .car-details-image {
+  max-width: 600px; /* Increased max-width */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Car info styles */
+.car-details-wrapper .car-details-info {
+  padding: 24px 48px 48px; /* Increased padding significantly */
+}
+
+.car-details-wrapper .car-details-title {
+  font-size: 42px; /* Increased font size */
+  font-weight: 700;
+  margin-bottom: 16px; /* Increased margin */
+  letter-spacing: -0.5px; /* Added letter spacing for style */
+}
+
+.car-details-wrapper .car-details-number, 
+.car-details-wrapper .car-details-price {
+  margin-bottom: 16px; /* Increased margin */
+}
+
+.car-details-wrapper .car-details-label {
+  font-size: 18px; /* Increased font size */
+  color: #aaa; /* Made labels slightly muted */
+}
+
+.car-details-wrapper .car-details-value {
+  font-size: 22px; /* Increased font size */
+  margin-left: 8px; /* Increased margin */
+}
+
+.car-details-wrapper .car-details-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px; /* Increased margin */
+  padding-top: 16px; /* Added padding and border for separation */
+  border-top: 1px solid #333;
+}
+
+.car-details-wrapper .car-details-rating-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.car-details-wrapper .car-details-rating-label {
+  font-size: 16px; /* Increased font size */
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.car-details-wrapper .car-details-star-rating {
+  color: #ffcc00;
+  font-size: 20px; /* Increased font size */
+}
+
+.car-details-wrapper .car-details-booking-container {
+  display: flex;
+  align-items: center;
+}
+
+.car-details-wrapper .car-details-upload-date {
+  font-size: 14px; /* Increased font size */
+  margin-right: 24px; /* Increased margin */
+  color: #aaa;
+}
+
+.car-details-wrapper .car-details-book-now-button {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 12px 28px; /* Increased padding */
+  border-radius: 24px; /* Increased border radius */
+  font-size: 16px; /* Increased font size */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.car-details-wrapper .car-details-book-now-button:hover {
+  background-color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .car-details-wrapper .car-details-card {
+    width: 95%;
+  }
+  
+  .car-details-wrapper .car-details-header {
+    padding: 12px 16px;
+  }
+  
+  .car-details-wrapper .car-details-search-container {
+    max-width: none;
+    margin: 0 16px;
+  }
+  
+  .car-details-wrapper .car-details-info {
+    padding: 16px 24px 32px;
+  }
+  
+  .car-details-wrapper .car-details-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 576px) {
+  .car-details-wrapper .car-details-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .car-details-wrapper .car-details-search-container {
+    order: 3;
+    margin: 8px 0;
+    width: 100%;
+  }
+  
+  .car-details-wrapper .car-details-nav-links {
+    display: none;
+  }
+  
+  .car-details-wrapper .car-details-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .car-details-wrapper .car-details-booking-container {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .car-details-wrapper .car-details-upload-date {
+    margin-bottom: 12px;
+    margin-right: 0;
+  }
+  
+  .car-details-wrapper .car-details-book-now-button {
+    width: 100%;
+  }
+}

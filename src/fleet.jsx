@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Added Link for navigation
 import './fleet.css';
 
 const Fleet = () => {
@@ -14,7 +14,6 @@ const Fleet = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        // Retrieve token from localStorage
         const token = localStorage.getItem("driverInfo")
           ? JSON.parse(localStorage.getItem("driverInfo")).token
           : localStorage.getItem("token");
@@ -30,24 +29,19 @@ const Fleet = () => {
         };
 
         const response = await axios.get('http://localhost:5000/api/vehicles', config);
-        console.log('API Response:', response); // Log full response for debugging
+        console.log('API Response:', response);
 
-        // Handle different response formats
         let vehicleData = [];
         if (Array.isArray(response.data)) {
-          // Case: API returns array directly
           vehicleData = response.data;
         } else if (response.data.status === 'success' && Array.isArray(response.data.data)) {
-          // Case: Expected format { status: 'success', data: [...] }
           vehicleData = response.data.data;
         } else if (Array.isArray(response.data.vehicles)) {
-          // Case: Alternative format { vehicles: [...] }
           vehicleData = response.data.vehicles;
         } else {
           throw new Error('Unexpected data format from API');
         }
 
-        // Validate vehicle data
         if (vehicleData.every(v => v.brand && v.model)) {
           setVehicles(vehicleData);
         } else {
@@ -58,14 +52,12 @@ const Fleet = () => {
       } catch (error) {
         console.error('Error fetching vehicles:', error);
         if (error.response) {
-          // HTTP error (e.g., 401, 500)
           setError(
             error.response.status === 401
               ? 'Unauthorized. Please log in to view the fleet.'
               : `Failed to fetch vehicles: ${error.response.data.message || error.message}`
           );
         } else {
-          // Network or other error
           setError(`Cannot connect to the server: ${error.message}. Please check your connection and try again.`);
         }
         setLoading(false);
@@ -74,47 +66,6 @@ const Fleet = () => {
 
     fetchVehicles();
   }, []);
-  const fetchVehicles = async () => {
-  try {
-    const token = localStorage.getItem("driverInfo")
-      ? JSON.parse(localStorage.getItem("driverInfo")).token
-      : localStorage.getItem("token");
-
-    const config = token ? {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    } : {};
-
-    const response = await axios.get('http://localhost:5000/api/vehicles', config);
-    console.log('API Response:', response); 
-
-    // Check for data format
-    let vehicleData = [];
-    if (Array.isArray(response.data)) {
-      vehicleData = response.data;
-    } else if (response.data.status === 'success' && Array.isArray(response.data.data)) {
-      vehicleData = response.data.data;
-    } else if (Array.isArray(response.data.vehicles)) {
-      vehicleData = response.data.vehicles;
-    } else {
-      throw new Error('Unexpected data format from API');
-    }
-
-    setVehicles(vehicleData);
-    setLoading(false);
-  } catch (error) {
-    console.error('Error fetching vehicles:', error);
-    setLoading(false);
-
-    if (error.response) {
-      setError(`Failed to fetch vehicles: ${error.response.data.message || error.message}`);
-    } else {
-      setError(`Network or server error: ${error.message}`);
-    }
-  }
-};
-
 
   const filteredVehicles = vehicles.filter(vehicle => {
     const matchesBrand = brand ? vehicle.brand.toLowerCase() === brand.toLowerCase().trim() : true;
@@ -159,20 +110,24 @@ const Fleet = () => {
       <div className="fleet-grid">
         {filteredVehicles.length > 0 ? (
           filteredVehicles.map(vehicle => (
-            <div key={vehicle._id} className={getCardClass(vehicle)}>
+            <Link
+              to={`/fleet/${brand}/${vehicle._id}`} // Navigate to CarDetails
+              key={vehicle._id}
+              className={getCardClass(vehicle)} // Reuse existing card class
+            >
               {!vehicle.isVerified && <div className="unavailable-badge">Unavailable</div>}
               <img
                 src={vehicle.images && vehicle.images.length > 0 && vehicle.images[0] ? vehicle.images[0] : 'https://via.placeholder.com/150'}
                 alt={`${vehicle.brand} ${vehicle.model}`}
                 className="car-image"
-                onError={(e) => (e.target.src = 'https://via.placeholder.com/150')} // Fallback on error
+                onError={(e) => (e.target.src = 'https://via.placeholder.com/150')}
               />
               <h3 className="car-name">{vehicle.brand} {vehicle.model}</h3>
               <p>License: {vehicle.licensePlate}</p>
               <div className="car-description">
                 {vehicle.isVerified ? 'Available for Rent' : 'Currently Unavailable'}
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <div className="no-results">No vehicles found for {brand || 'this search'}.</div>

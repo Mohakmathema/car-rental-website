@@ -6,14 +6,18 @@ import {
   updateVehicle,
   deleteVehicle,
   updateVehicleStatus,
-  getAllVehicles // This should now work after updating the controller
+  getAllVehicles,
+  getVehicleById
 } from '../controllers/vehicleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Add new route to fetch all vehicles
+// Fetch all vehicles
 router.get('/', getAllVehicles);
+
+// Fetch single vehicle by ID
+router.get('/:id', protect, getVehicleById);
 
 // Existing routes
 router.post('/submit', protect, submitVehicle);

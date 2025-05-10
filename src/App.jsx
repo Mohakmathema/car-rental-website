@@ -22,7 +22,9 @@ import ViewUsers from "./ViewUsers";
 import ViewDrivers from "./ViewDrivers";
 import EditFleet from "./EditFleet";
 import EditCars from "./EditCars";
-import Services from "./Services"; // Import Services component
+import Services from "./Services";
+import CarDetails from "./carDetails";
+import BookingPage from "./BookingPage"; // Import BookingPage component
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -52,7 +54,9 @@ function App() {
         <Route path="/login" element={<LoginSignup setUser={setUser} />} />
         <Route path="/fleet" element={<MainFleet />} />
         <Route path="/fleet/:brand" element={<Fleet />} />
-        <Route path="/services" element={<Services />} /> {/* Updated route */}
+        <Route path="/fleet/:brand/:carId" element={<CarDetails />} />
+        <Route path="/fleet/:brand/:carId/booking" element={<BookingPage />} /> {/* New route for BookingPage */}
+        <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route
           path="/profile"
