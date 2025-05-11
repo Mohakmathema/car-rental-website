@@ -19,6 +19,9 @@ const Profile = ({ user, setUser }) => {
     confirmNewPassword: "",
   });
   const [passwordError, setPasswordError] = useState("");
+  const handleViewBookings = () => {
+    navigate("/my-bookings");
+  };
 
   useEffect(() => {
     const storedProfile = localStorage.getItem("userInfo");
@@ -225,6 +228,11 @@ const Profile = ({ user, setUser }) => {
           >
             Change Password
           </button>
+
+          <button onClick={handleViewBookings} className="my-bookings-button">
+            My Bookings
+          </button>
+
           {/* Added Delete Profile Button */}
           <button
             onClick={handleDelete}

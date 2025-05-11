@@ -16,8 +16,24 @@ import {
   getCategories,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getFleets,
+  createFleets,
+  deleteFleets
 } from '../controllers/adminController.js';
+// import multer from 'multer';
+
+// Configure multer for file uploads
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/fleets/') // Make sure this directory exists
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + '-' + file.originalname)
+//   }
+// });
+
+// const upload = multer({ storage: storage });  
 
 const router = express.Router();
 
@@ -46,5 +62,10 @@ router.get('/categories', protect, admin, getCategories);
 router.post('/categories', protect, admin, createCategory);
 router.put('/categories/:id', protect, admin, updateCategory);
 router.delete('/categories/:id', protect, admin, deleteCategory);
+
+router.get('/fleets', protect, admin, getFleets);
+// router.post('/fleets', protect, admin, upload.single('logo'), createFleet);
+router.post('/fleets', protect, admin, createFleets);
+router.delete('/fleets/:id', protect, admin, deleteFleets);
 
 export default router;

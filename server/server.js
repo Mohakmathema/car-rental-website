@@ -6,6 +6,9 @@ import userRoutes from './routes/userRoutes.js';
 import driverRoutes from './routes/driverRoutes.js';
 import vehicleRoutes from './routes/vehicleRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import fleetRoutes from './routes/fleetRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
+
 
 dotenv.config();
 
@@ -23,6 +26,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/fleets', fleetRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

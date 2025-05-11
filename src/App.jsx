@@ -21,6 +21,10 @@ import ViewUsers from "./ViewUsers";
 import ViewDrivers from "./ViewDrivers";
 import EditFleet from "./EditFleet";
 import EditCars from "./EditCars";
+import BookingForm from "./BookingForm";
+import BookNow from "./BookNow";
+import VehicleDetails from "./VehicleDetails";
+import UserBookings from "./UserBookings";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -113,6 +117,11 @@ function App() {
           <Route path="fleet" element={<EditFleet />} />
           <Route path="cars" element={<EditCars />} />
         </Route>
+
+        <Route path="/book-now" element={<BookNow />} />
+        <Route path="/vehicle/:id" element={<VehicleDetails />} />
+        <Route path="/book/:id" element={<BookingForm />} />
+        <Route path="/my-bookings" element={<UserBookings />} />
       </Routes>
     </Router>
   );

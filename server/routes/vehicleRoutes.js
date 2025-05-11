@@ -5,7 +5,9 @@ import {
   getVehicleByDriver,
   updateVehicle,
   deleteVehicle ,
-  updateVehicleStatus
+  updateVehicleStatus,
+  getAllVehicles,
+  getVehicleById
 } from '../controllers/vehicleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -17,5 +19,8 @@ router.get('/driver/:driverId', getVehicleByDriver);
 router.put('/:id', protect, updateVehicle);
 router.delete('/:id', protect, deleteVehicle);
 router.put('/:id/status', protect, updateVehicleStatus);
+// router.get('/', getAllVehicles); // Public route to get all verified vehicles
+router.get('/', getAllVehicles);
+router.get('/:id', getVehicleById);
 
 export { router as default };

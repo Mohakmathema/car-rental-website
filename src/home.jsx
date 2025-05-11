@@ -22,6 +22,10 @@ function Home({ lastFrame, user }) {
     }
   };
 
+  const handleBookNowClick = () => {
+    navigate("/book-now");
+  };
+
   return (
     <div className="home-container">
       <div className="content-wrapper">
@@ -102,7 +106,9 @@ function Home({ lastFrame, user }) {
         </div>
         {/* CTA Box */}
         <div className="cta-box">
-          <button className="book-btn">Book Now</button>
+          <button className="book-btn" onClick={handleBookNowClick}>
+            Book Now
+          </button>
         </div>
       </div>
     </div>

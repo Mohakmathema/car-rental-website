@@ -2,6 +2,9 @@ import User from '../models/userModel.js';
 import Driver from '../driverModel.js';
 import Vehicle from '../vehicleModel.js';
 import Category from '../categoryModel.js';
+import Fleet from '../fleetModel.js';
+// import Fleet from '../fleetModel.js';
+
 
 // Stats controllers
 export const getUserStats = async (req, res) => {
@@ -159,6 +162,35 @@ export const deleteCategory = async (req, res) => {
   try {
     await Category.findByIdAndDelete(req.params.id);
     res.json({ message: 'Category deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Fleet management
+export const getFleets = async (req, res) => {
+  try {
+    const fleets = await Fleet.find({});
+    res.json(fleets);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const createFleets = async (req, res) => {
+  try {
+    const { name, logoUrl } = req.body;
+    const fleet = await Fleet.create({ name, logoUrl });
+    res.status(201).json(fleet);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const deleteFleets = async (req, res) => {
+  try {
+    await Fleet.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Fleet deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

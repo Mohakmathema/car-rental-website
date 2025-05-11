@@ -21,66 +21,153 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.booking-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1em;
 }
 
 .status {
   padding: 5px 10px;
   border-radius: 15px;
   font-size: 0.9em;
+  font-weight: 500;
 }
 
-.status.pending {
+.status-pending {
   background: #fff3cd;
   color: #856404;
 }
 
-.status.accepted {
+.status-confirmed {
   background: #d4edda;
   color: #155724;
 }
 
-.status.rejected {
+.status-completed {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-cancelled {
   background: #f8d7da;
   color: #721c24;
 }
 
 .booking-details {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.booking-details p {
-  margin: 5px 0;
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.value {
+  color: #333;
+  font-weight: 500;
+}
+
+.driver-required {
+  margin-top: 10px;
+  padding: 8px;
+  background: #e8f4fd;
+  color: #0066cc;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.loading,
+.error-message,
+.no-bookings {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.error-message {
+  color: #dc3545;
+  background: #f8d7da;
+}
+
+.no-bookings {
+  color: #666;
+  font-size: 1.1em;
 }
 
 .booking-actions {
   display: flex;
   gap: 10px;
+  margin-top: 15px;
 }
 
 .accept-btn,
-.reject-btn {
-  flex: 1;
-  padding: 8px;
+.decline-btn {
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: 500;
   transition: all 0.3s ease;
+  flex: 1;
 }
 
 .accept-btn {
-  background: #28a745;
+  background-color: #28a745;
   color: white;
 }
 
-.reject-btn {
-  background: #dc3545;
+.decline-btn {
+  background-color: #dc3545;
   color: white;
 }
 
 .accept-btn:hover {
-  background: #218838;
+  background-color: #218838;
 }
 
-.reject-btn:hover {
-  background: #c82333;
+.decline-btn:hover {
+  background-color: #c82333;
+}
+
+.accept-btn:disabled,
+.decline-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.status-confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+@media (max-width: 768px) {
+  .bookings-grid {
+    grid-template-columns: 1fr;
+  }
 }
