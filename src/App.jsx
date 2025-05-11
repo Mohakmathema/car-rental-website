@@ -25,6 +25,9 @@ import BookingForm from "./BookingForm";
 import BookNow from "./BookNow";
 import VehicleDetails from "./VehicleDetails";
 import UserBookings from "./UserBookings";
+import AboutUs from "./AboutUs";
+import Faq from "./Faq";
+import Terms from "./Terms";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -55,6 +58,9 @@ function App() {
         <Route path="/fleet" element={<Fleet />} />
         <Route path="/services" element={<div>Services Page</div>} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="about" element={<AboutUs />} />
+        <Route path="faq" element={<Faq />} />
+        <Route path="terms" element={<Terms />} />
         <Route
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}

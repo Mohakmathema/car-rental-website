@@ -236,6 +236,12 @@ const LoginSignup = ({ setUser }) => {
                 Click here
               </Link>
             </p>
+            <p className="link-para">
+              By signing in or creating an account, you agree with our{" "}
+              <Link to="/terms">Terms & Conditions</Link>. Learn more about us
+              on our <Link to="/about">About Us</Link> page or check our{" "}
+              <Link to="/faq">FAQ</Link> for common questions.
+            </p>
           </div>
         </div>
       </div>
