@@ -30,11 +30,16 @@
   font-size: 16px;
   font-weight: 500;
   color: #666;
+  transition: all 0.3s ease;
 }
 
 .tab-btn.active {
   color: #4a90e2;
   border-bottom: 2px solid #4a90e2;
+}
+
+.tab-btn:hover {
+  color: #4a90e2;
 }
 
 .driver-auth-form {
@@ -44,10 +49,13 @@
 }
 
 .driver-auth-form input {
-  padding: 12px;
+  padding: 12px 12px 12px 12px;
+  padding-right: 70px; /* Space for toggle button */
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 14px;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  transition: border-color 0.3s ease;
 }
 
 .driver-auth-form input:focus {
@@ -55,10 +63,34 @@
   outline: none;
 }
 
+.driver-auth-form input::placeholder {
+  color: #999;
+}
+
+/* Style for the Show/Hide toggle button */
+.driver-auth-form .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  padding: 0 5px;
+  transition: color 0.3s ease;
+}
+
+.driver-auth-form .toggle-password:hover {
+  color: #4a90e2;
+}
+
 .error-message {
   color: #e74c3c;
   margin-bottom: 15px;
   text-align: center;
+  font-size: 14px;
 }
 
 .submit-btn {
@@ -69,9 +101,55 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .submit-btn:hover {
   background: #357abd;
+  transform: translateY(-2px);
+}
+
+/* Animation for form elements */
+.driver-auth-form input,
+.submit-btn {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.driver-auth-form input:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.driver-auth-form input:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.driver-auth-form input:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.driver-auth-form input:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.driver-auth-form input:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.submit-btn {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: Style file input for better appearance */
+.driver-auth-form input[type="file"] {
+  padding: 12px;
+  border: none; /* Remove default border for file input */
+  background: #f9f9f9;
+  border-radius: 5px;
 }

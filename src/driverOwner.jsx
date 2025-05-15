@@ -15,28 +15,79 @@ const DriverOwner = () => {
     vehicleDetails: {},
   });
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setError("");
+    // Reset fields not needed for login
+    if (tab === "login") {
+      setFormData({
+        name: "",
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: "",
+        vehicleImage: "",
+        vehicleDetails: {},
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (activeTab === "register") {
+      if (formData.password.length < 7) {
+        setError("Password must be at least 7 characters long");
+        return;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+    }
+
     try {
       if (activeTab === "register") {
-        if (formData.password !== formData.confirmPassword) {
-          setError("Passwords do not match");
-          return;
-        }
-        const response = await axios.post("/api/drivers/register", formData);
+        console.log("Register payload:", formData);
+        const response = await axios.post("/api/drivers/register", formData, {
+          headers: { "Content-Type": "application/json" },
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
+        });
         localStorage.setItem("driverInfo", JSON.stringify(response.data));
         navigate("/driver-dashboard");
       } else {
-        const response = await axios.post("/api/drivers/login", {
+        const loginPayload = {
           email: formData.email,
           password: formData.password,
+        };
+        console.log("Login payload:", loginPayload);
+        const response = await axios.post("/api/drivers/login", loginPayload, {
+          headers: { "Content-Type": "application/json" },
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
         });
         localStorage.setItem("driverInfo", JSON.stringify(response.data));
         navigate("/driver-dashboard");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "An error occurred");
+      console.error("Request error:", error.response);
+      if (error.response?.status === 413) {
+        setError("Request entity too large. Please ensure no large files are included.");
+      } else {
+        setError(error.response?.data?.message || "An error occurred");
+      }
     }
   };
 
@@ -46,13 +97,13 @@ const DriverOwner = () => {
         <div className="auth-tabs">
           <button
             className={`tab-btn ${activeTab === "login" ? "active" : ""}`}
-            onClick={() => setActiveTab("login")}
+            onClick={() => handleTabChange("login")}
           >
             Login
           </button>
           <button
             className={`tab-btn ${activeTab === "register" ? "active" : ""}`}
-            onClick={() => setActiveTab("register")}
+            onClick={() => handleTabChange("register")}
           >
             Register
           </button>
@@ -64,53 +115,76 @@ const DriverOwner = () => {
           {activeTab === "register" && (
             <input
               type="text"
+              name="name"
               placeholder="Name"
               value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
+              onChange={handleInputChange}
               required
             />
           )}
           <input
             type="email"
+            name="email"
             placeholder="Email"
             value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
+            onChange={handleInputChange}
             required
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            required
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              minLength={activeTab === "register" ? 7 : undefined}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
           {activeTab === "register" && (
             <>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-                required
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  required
+                  minLength={7}
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? "Hide" : "Show"}
+                </button>
+              </div>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  const reader = new FileReader();
-                  reader.readAsDataURL(file);
-                  reader.onloadend = () => {
-                    setFormData({ ...formData, vehicleImage: reader.result });
-                  };
+                  if (file) {
+                    // Limit file size to 1MB
+                    if (file.size > 1 * 1024 * 1024) {
+                      setError("Image file is too large. Please upload an image smaller than 1MB.");
+                      return;
+                    }
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onloadend = () => {
+                      setFormData({ ...formData, vehicleImage: reader.result });
+                    };
+                  }
                 }}
                 required
               />

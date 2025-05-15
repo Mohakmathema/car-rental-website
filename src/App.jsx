@@ -4,6 +4,7 @@ import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
+import CarFleet from "./carfleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
 import DriverOwner from "./driverOwner";
@@ -28,6 +29,7 @@ import UserBookings from "./UserBookings";
 import AboutUs from "./AboutUs";
 import Faq from "./Faq";
 import Terms from "./Terms";
+import Services from "./Services";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -56,11 +58,12 @@ function App() {
         <Route path="/" element={<Home lastFrame={lastFrame} user={user} />} />
         <Route path="/login" element={<LoginSignup setUser={setUser} />} />
         <Route path="/fleet" element={<Fleet />} />
-        <Route path="/services" element={<div>Services Page</div>} />
+        <Route path="/fleet/:brand" element={<CarFleet />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="about" element={<AboutUs />} />
-        <Route path="faq" element={<Faq />} />
-        <Route path="terms" element={<Terms />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/terms" element={<Terms />} />
         <Route
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}
@@ -106,15 +109,6 @@ function App() {
             </DriverLayout>
           }
         />
-
-        {/* <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminLayout />} />
-        <Route index element={<Dashboard />} />
-        <Route path="users" element={<ViewUsers />} />
-        <Route path="drivers" element={<ViewDrivers />} />
-        <Route path="fleet" element={<EditFleet />} />
-        <Route path="cars" element={<EditCars />} /> */}
-
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
@@ -123,7 +117,6 @@ function App() {
           <Route path="fleet" element={<EditFleet />} />
           <Route path="cars" element={<EditCars />} />
         </Route>
-
         <Route path="/book-now" element={<BookNow />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
         <Route path="/book/:id" element={<BookingForm />} />
