@@ -9,6 +9,7 @@ const AdminLogin = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -26,7 +27,7 @@ const AdminLogin = () => {
     try {
       setLoading(true);
 
-      //for now hardcoded admin username and password
+      // Hardcoded admin username and password
       const ADMIN_USERNAME = "admin";
       const ADMIN_PASSWORD = "admin123";
 
@@ -39,39 +40,16 @@ const AdminLogin = () => {
           "adminInfo",
           JSON.stringify({
             username: ADMIN_USERNAME,
-            isFirstLogin: true, // Flag to check if it's first login,
+            isFirstLogin: true, // Flag to check if it's first login
             token: "ADMIN_TOKEN",
           })
         );
 
-        // Navigate to admin dashboard with a flag to show the change password form
+        // Navigate to admin dashboard
         navigate("/admin-dashboard");
       } else {
         setError("Invalid username or password");
       }
-
-      // In a real implementation, you would call your backend API:
-      /*
-      const response = await fetch(`http://localhost:5000/api/admin/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("adminInfo", JSON.stringify(data));
-        navigate("/admin-dashboard");
-      } else {
-        setError(data.message || "Login failed");
-      }
-      */
     } catch (error) {
       setError(error.message || "An unexpected error occurred");
     } finally {
@@ -95,14 +73,31 @@ const AdminLogin = () => {
             onChange={handleInputChange}
             required
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
+            <button
+              type="button"
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
           <button type="submit" className="admin-submit-btn" disabled={loading}>
             {loading ? "Processing..." : "Login"}
           </button>

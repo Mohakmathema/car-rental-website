@@ -25,6 +25,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1; /* Ensure nav takes remaining space */
 }
 
 .nav-item {
@@ -41,4 +42,21 @@
 
 .nav-item.active {
   background: #4a90e2;
+}
+
+.driver-sidebar .logout-button {
+  padding: 12px 15px;
+  color: #e74c3c; /* Red for logout */
+  background: none;
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto; /* Push to bottom */
+}
+
+.driver-sidebar .logout-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #c0392b; /* Darker red on hover */
 }
