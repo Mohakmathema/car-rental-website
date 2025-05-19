@@ -1,12 +1,11 @@
-import React from "react";
-import "./AboutUs.css";
+import './AboutUs.css';
 
 // Import images from src/assets/
-import AayushmaImg from "./assets/aayushma.jpg";
-import MohakImg from "./assets/mohak.jpg";
-import SamratImg from "./assets/samrat.jpg";
-import SubinImg from "./assets/subin.jpg";
-import SushmitaImg from "./assets/sushmita.jpg";
+import AayushmaImg from './assets/Aayushma.jpg';
+import MohakImg from './assets/mohak.jpg';
+import SamratImg from './assets/samrat.jpg';
+import SubinImg from './assets/subin.jpg';
+import SushmitaImg from './assets/sushmita.jpg';
 
 function AboutUs() {
   return (
@@ -99,6 +98,7 @@ function AboutUs() {
       {/* Call to Action */}
       <section className="cta-section">
         <h2>Ready to Experience Luxury?</h2>
+        {/* Uncomment the button if you want to use it */}
         {/* <button className="cta-button">Book a Car Now</button> */}
       </section>
     </div>
