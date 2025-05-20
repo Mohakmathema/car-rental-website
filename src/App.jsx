@@ -29,7 +29,8 @@ import UserBookings from "./UserBookings";
 import AboutUs from "./AboutUs";
 import Faq from "./Faq";
 import Terms from "./Terms";
-import Services from "./Services";
+import Services from "./Services"; // Add this import
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -58,8 +59,7 @@ function App() {
         <Route path="/" element={<Home lastFrame={lastFrame} user={user} />} />
         <Route path="/login" element={<LoginSignup setUser={setUser} />} />
         <Route path="/fleet" element={<Fleet />} />
-        <Route path="/fleet/:brand" element={<CarFleet />} />
-        <Route path="/services" element={<Services />} />
+        <Route path="/services" element={<Services />} /> {/* Updated route */}
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/faq" element={<Faq />} />

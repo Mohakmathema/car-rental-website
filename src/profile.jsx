@@ -229,10 +229,6 @@ const Profile = ({ user, setUser }) => {
             Change Password
           </button>
 
-          <button onClick={handleViewBookings} className="my-bookings-button">
-            My Bookings
-          </button>
-
           {/* Added Delete Profile Button */}
           <button
             onClick={handleDelete}
