@@ -27,14 +27,14 @@ const DriverSidebar = () => {
         >
           Bookings
         </Link>
-        <Link
+        {/* <Link
           to="/driver-dashboard/vehicle"
           className={`nav-item ${
             location.pathname === "/driver-dashboard/vehicle" ? "active" : ""
           }`}
         >
           Vehicle
-        </Link>
+        </Link> */}
         <Link
           to="/driver-dashboard/history"
           className={`nav-item ${
