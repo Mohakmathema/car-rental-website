@@ -1,9 +1,19 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./DriverSidebar.css";
 
 const DriverSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear authentication data from localStorage
+    localStorage.removeItem("driverInfo");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo"); // Clear userInfo if used
+    // Navigate to login page
+    navigate("/login");
+  };
 
   return (
     <div className="driver-sidebar">
@@ -51,6 +61,12 @@ const DriverSidebar = () => {
         >
           Settings
         </Link>
+        <button
+          onClick={handleLogout}
+          className="nav-item logout-button"
+        >
+          Logout
+        </button>
       </nav>
     </div>
   );

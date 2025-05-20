@@ -4,6 +4,7 @@ import Loader from "./loader";
 import Home from "./home";
 import LoginSignup from "./loginSignup";
 import Fleet from "./fleet";
+import CarFleet from "./carfleet";
 import Profile from "./profile";
 import ContactUs from "./ContactUs";
 import DriverOwner from "./driverOwner";
@@ -29,6 +30,7 @@ import AboutUs from "./AboutUs";
 import Faq from "./Faq";
 import Terms from "./Terms";
 import Services from "./Services"; // Add this import
+
 
 function App() {
   const [loading, setLoading] = useState(true);

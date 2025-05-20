@@ -63,13 +63,15 @@
 }
 
 .auth-form input {
-  padding: 15px;
+  padding: 15px 15px 15px 15px; /* Adjusted padding for consistency */
+  padding-right: 70px; /* Space for toggle button */
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
   font-size: 1em;
   transition: all 0.3s ease;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 
 .auth-form input:focus {
@@ -80,6 +82,26 @@
 
 .auth-form input::placeholder {
   color: rgba(255, 255, 255, 0.5);
+}
+
+/* Style for the Show/Hide toggle button */
+.auth-form .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  opacity: 0.7;
+  font-size: 14px;
+  padding: 0 5px;
+  transition: opacity 0.3s ease;
+}
+
+.auth-form .toggle-password:hover {
+  opacity: 1;
 }
 
 .submit-btn {
@@ -101,7 +123,7 @@
   transform: translateY(-2px);
 }
 
-/* Add animation for form elements */
+/* Animation for form elements */
 .auth-form input,
 .submit-btn {
   animation: fadeInUp 0.5s ease forwards;
@@ -114,8 +136,23 @@
 .auth-form input:nth-child(2) {
   animation-delay: 0.2s;
 }
-.submit-btn {
+.auth-form input:nth-child(3) {
   animation-delay: 0.3s;
+}
+.auth-form input:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.auth-form input:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.auth-form input:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.auth-form input:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.submit-btn {
+  animation-delay: 0.8s;
 }
 
 @keyframes fadeInUp {
@@ -162,7 +199,8 @@
 }
 
 .driver-link {
-  display: flexbox;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
